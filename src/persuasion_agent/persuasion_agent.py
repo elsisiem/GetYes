@@ -30,19 +30,24 @@ from sentient_agent_framework import (
     ResponseHandler,
 )
 
-# (dotenv loading as before)
+# --- dotenv loading section ---
+# Ensure indentation is correct here. Pylance might flag the 'break' incorrectly.
 dotenv_path = None
 current_dir = os.path.dirname(__file__)
 for i in range(3):
     potential_path = os.path.join(current_dir, "../" * i, ".env")
     if os.path.exists(potential_path):
         dotenv_path = potential_path
-        break
+        break  # This break is correctly placed within the loop/if structure
 if dotenv_path:
     print(f"DEBUG: Loading .env from: {dotenv_path}")
-    load_dotenv(dotenv_path=dotenv_path, verbose=True)
+    load_dotenv(
+        dotenv_path=dotenv_path, verbose=True
+    )  # Removed load_success assignment as it wasn't used
 else:
     print("DEBUG: No .env file found.")
+# --- end dotenv loading ---
+
 
 # Configure Logging
 logger = logging.getLogger(__name__)
@@ -54,18 +59,17 @@ logging.basicConfig(
 MAX_PDFS_TO_PROCESS = 2
 MAX_FILE_SIZE_MB = 15
 DOWNLOAD_TIMEOUT_SECONDS = 30
-MAX_PDF_TEXT_LEN = 75000
+MAX_PDF_TEXT_LEN = 100000
 # --- END CONSTANTS ---
 
 
 class PersuasionAgent(AbstractAgent):
     """
-    Your personal persuasion assistant, GetYes! Powered by Gemini, techniques DB, search, and PDF processing.
+    GetYes: Advanced AI Persuasion Strategist. Analyzes, plans, and executes
+    influence campaigns using Gemini, techniques, search, and documents.
     """
 
-    # --- UPDATED AGENT NAME ---
     def __init__(self, name: str = "GetYes Persuasion Agent"):
-        # --- END UPDATE ---
         logger.info("Initializing GetYes Persuasion Agent...")
         super().__init__(name)
         gemini_api_key = os.getenv("GEMINI_API_KEY")
@@ -94,7 +98,6 @@ class PersuasionAgent(AbstractAgent):
         except Exception as e:
             logger.critical(f"Failed to load techniques database: {e}", exc_info=True)
             raise
-        # --- UPDATED STRUCTURE HELP TEXT ---
         self.REQUIRED_PROMPT_STRUCTURE = """
 **Required Prompt Structure:**
 
@@ -102,33 +105,32 @@ class PersuasionAgent(AbstractAgent):
 
 **Target:**
 *   Name/Role: [e.g., "Jane Doe, Marketing Manager"]
-*   Profile Notes: [e.g., "Analytical, skeptical"]
-*   Key Motivation/Value: [e.g., "Saving money", "Efficiency"]
-*   Main Pain Point/Objection: [e.g., "Budget constraints", "Not enough time"]
-*   Relevant Belief/Attitude: [e.g., "Thinks current system is fine"]
+*   Profile Notes: [e.g., "Analytical, skeptical, values data"]
+*   Key Motivation/Value: [e.g., "Saving money", "Efficiency", "Looking good to boss"]
+*   Main Pain Point/Objection: [e.g., "Budget constraints", "Not enough time", "Risk aversion"]
+*   Relevant Belief/Attitude: [e.g., "Thinks current system is fine", "Open to new ideas if justified"]
 
 **Relationship:**
-*   Your Role to Target: [e.g., "Peer", "Their Manager"]
-*   History/Trust Level: [e.g., "New relationship", "Trust high"]
+*   Your Role to Target: [e.g., "Peer", "Their Manager", "Salesperson"]
+*   History/Trust Level: [e.g., "New relationship", "Trust high", "Recent disagreement"]
 
 **Context:**
-*   Situation: [e.g., "Follow-up email", "Initial request"]
+*   Situation: [e.g., "Follow-up email", "Initial request", "Meeting prep"]
 *   Channel: [e.g., "Email", "Chat", "Script outline"]
 *   Key Background Info/Constraints: [1-2 essential points. e.g., "Ref Q1 results", "Need response by EOD"]
 
 **Output Requirements:**
-*   Desired Tone: [e.g., "Formal", "Empathetic", "Urgent"]
+*   Desired Tone: [e.g., "Formal", "Empathetic", "Urgent", "Subtly manipulative"]
 *   Desired Length: [e.g., "Short paragraph", "~300 words"]
 *   Technique Focus (Optional): [e.g., "Emphasize Scarcity"]
-*   Ethical Lines NOT to Cross: [CRUCIAL: e.g., "No lying", "Avoid aggression"]
+*   Ethical Lines NOT to Cross: [CRUCIAL: e.g., "No lying", "Avoid aggression", "Don't exploit X"]
 
-**[Optional: Add any other critical constraints OR URLs to relevant PDF files like https://example.com/report.pdf - up to 2 PDFs supported]**
+**[Optional: Add URLs to relevant PDF files like https://example.com/report.pdf - up to 2 supported]**
 """
-        # --- END UPDATE ---
         logger.info("GetYes Agent initialization complete.")
 
     def _get_technique_details_string(self, technique_names: List[str]) -> str:
-        # (implementation as before)
+        """Formats details of selected techniques for the LLM prompt."""
         details = []
         if not technique_names:
             return "No specific techniques selected."
@@ -140,7 +142,7 @@ class PersuasionAgent(AbstractAgent):
                     details.append(
                         f"**Technique: {name}**\n"
                         f"Keywords: {', '.join(technique.get('keywords', ['N/A']))}\n"
-                        f"Instructions Overview:\n{instructions[:500] + '...' if len(instructions) > 500 else instructions}"
+                        f"Instructions:\n{instructions}\n"  # Keep full instructions for planning
                     )
                     found = True
                     break
@@ -148,21 +150,20 @@ class PersuasionAgent(AbstractAgent):
                 details.append(f"**Technique: {name}**\nDetails not found.")
         return "\n\n---\n\n".join(details) if details else "No details found."
 
+    # (... PDF Helper Methods _extract_pdf_urls, _download_file, _extract_pdf_text, _process_pdf_url remain unchanged ...)
     def _extract_pdf_urls(self, text: str) -> List[str]:
-        # (implementation as before)
+        """Finds potential PDF URLs in text."""
         pdf_urls = re.findall(
             r'https?://[^\s"\'<>]+?\.pdf(?:[?#][^\s"\'<>]*)?', text, re.IGNORECASE
         )
         unique_urls = sorted(list(set(pdf_urls)))
-        logger.info(
-            f"Found {len(unique_urls)} unique potential PDF URLs: {unique_urls}"
-        )
+        logger.info(f"Found {len(unique_urls)} unique PDF URLs: {unique_urls}")
         return unique_urls
 
     async def _download_file(
         self, session: aiohttp.ClientSession, url: str
     ) -> Tuple[Optional[bytes], Optional[str]]:
-        # (implementation as before, including User-Agent)
+        """Downloads file with User-Agent, timeout, size limit."""
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
@@ -176,8 +177,8 @@ class PersuasionAgent(AbstractAgent):
             ) as response:
                 logger.debug(f"Status {response.status} for {url}")
                 if response.status >= 400:
-                    error = f"HTTP Error {response.status}: {response.reason}"
-                    logger.warning(f"Download failed: {error} ({url})")
+                    error = f"HTTP Error {response.status}"
+                    logger.warning(f"{error} ({url})")
                     return None, error
                 content_type = response.headers.get("Content-Type", "").lower()
                 if "application/pdf" not in content_type:
@@ -185,11 +186,9 @@ class PersuasionAgent(AbstractAgent):
                         f"Unexpected Content-Type '{content_type}' for {url}. Processing anyway."
                     )
                 content_length = response.headers.get("Content-Length")
-                if (
-                    content_length
-                    and int(content_length) > MAX_FILE_SIZE_MB * 1024 * 1024
-                ):
-                    error = f"Exceeds size limit {MAX_FILE_SIZE_MB}MB (Content-Length)"
+                max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
+                if content_length and int(content_length) > max_bytes:
+                    error = f"Exceeds size {MAX_FILE_SIZE_MB}MB"
                     logger.warning(f"{error} ({url})")
                     return None, error
                 content = bytearray()
@@ -199,8 +198,8 @@ class PersuasionAgent(AbstractAgent):
                     async for chunk in response.content.iter_chunked(chunk_size):
                         content.extend(chunk)
                         total_read = len(content)
-                        if total_read > MAX_FILE_SIZE_MB * 1024 * 1024:
-                            error = f"Exceeds size limit {MAX_FILE_SIZE_MB}MB during download."
+                        if total_read > max_bytes:
+                            error = f"Exceeds size {MAX_FILE_SIZE_MB}MB"
                             logger.warning(f"{error} ({url})")
                             await response.release()
                             return None, error
@@ -210,7 +209,7 @@ class PersuasionAgent(AbstractAgent):
                     logger.warning(f"Payload error: {e} ({url})")
                     return None, f"Payload error: {e}"
         except asyncio.TimeoutError:
-            error = f"Timeout after {DOWNLOAD_TIMEOUT_SECONDS}s"
+            error = f"Timeout {DOWNLOAD_TIMEOUT_SECONDS}s"
             logger.warning(f"{error} ({url})")
             return None, error
         except aiohttp.ClientError as e:
@@ -225,13 +224,13 @@ class PersuasionAgent(AbstractAgent):
     def _extract_pdf_text(
         self, pdf_content: bytes, url: str
     ) -> Tuple[Optional[str], Optional[str]]:
-        # (implementation as before)
+        """Extracts text from PDF bytes."""
         try:
-            logger.info(f"Parsing PDF from: {url}")
+            logger.info(f"Parsing PDF: {url}")
             reader = PdfReader(io.BytesIO(pdf_content), strict=False)
             if reader.is_encrypted:
                 logger.warning(f"Encrypted PDF: {url}")
-                return None, "PDF is encrypted"
+                return None, "PDF encrypted"
             num_pages = len(reader.pages)
             text = ""
             processed_pages = 0
@@ -265,7 +264,7 @@ class PersuasionAgent(AbstractAgent):
     async def _process_pdf_url(
         self, session: aiohttp.ClientSession, url: str
     ) -> Tuple[str, Optional[str], Optional[str]]:
-        # (implementation as before)
+        """Downloads and parses a single PDF URL."""
         pdf_content, download_error = await self._download_file(session, url)
         if download_error:
             return url, None, f"Download Error: {download_error}"
@@ -288,7 +287,7 @@ class PersuasionAgent(AbstractAgent):
     ):
         activity_id = session.activity_id
         logger.info(f"[{activity_id}] Received query: {query.prompt[:150]}...")
-        user_context_original = query.prompt.strip()  # Use stripped version
+        user_context_original = query.prompt.strip()
 
         # --- Handle /start command ---
         if user_context_original.lower() == "/start":
@@ -328,18 +327,17 @@ Ready to increase your influence? Describe your challenge below. 👇
             await start_stream.complete()
             await response_handler.complete()
             logger.info(f"[{activity_id}] Sent /start message.")
-            return  # Stop processing here for /start
+            return
         # --- End /start handling ---
 
-        # --- PDF Processing (Now uses user_context_original) ---
+        # --- PDF Processing ---
+        # (Logic as before)
         pdf_urls = self._extract_pdf_urls(user_context_original)
-        processed_pdfs: Dict[str, str] = {}
-        pdf_errors: Dict[str, str] = {}
-        formatted_pdf_content = "No PDF files processed or provided."  # Default
-
+        processed_pdfs = {}
+        pdf_errors = {}
+        formatted_pdf_content = "No PDF files processed or provided."
         if pdf_urls:
             urls_to_process = pdf_urls[:MAX_PDFS_TO_PROCESS]
-            # (PDF processing logic as before...)
             if len(pdf_urls) > MAX_PDFS_TO_PROCESS:
                 warn_msg = f"Found {len(pdf_urls)} PDFs. Processing first {MAX_PDFS_TO_PROCESS}."
                 logger.warning(f"[{activity_id}] {warn_msg}")
@@ -349,11 +347,11 @@ Ready to increase your influence? Describe your challenge below. 👇
                     "STATUS", f"Processing {len(urls_to_process)} PDF(s)..."
                 )
             tasks = []
+            successful_count = 0
             async with aiohttp.ClientSession() as http_session:
                 for url in urls_to_process:
                     tasks.append(self._process_pdf_url(http_session, url))
                 results = await asyncio.gather(*tasks)
-            successful_count = 0
             for url, text, error in results:
                 if error:
                     pdf_errors[url] = error
@@ -363,12 +361,12 @@ Ready to increase your influence? Describe your challenge below. 👇
             pdf_sections = []
             if processed_pdfs:
                 pdf_sections.append(
-                    f"Successfully processed {successful_count} PDF file(s). Content:"
+                    f"Successfully processed {successful_count} PDF file(s). Content Summary:"
                 )
                 for url, text in processed_pdfs.items():
                     pdf_sections.append(
-                        f"\n**--- Start: {os.path.basename(url)} ---**\n```\n{text}\n```\n**--- End: {os.path.basename(url)} ---**"
-                    )
+                        f"\n**--- Start Summary: {os.path.basename(url)} ---**\n```\n{text[:1000]}...\n```\n**--- End Summary: {os.path.basename(url)} ---**"
+                    )  # Summary for prompt
                 pdf_sections.append("\n")
             if pdf_errors:
                 error_summary = "; ".join(
@@ -379,7 +377,7 @@ Ready to increase your influence? Describe your challenge below. 👇
                 )
                 logger.warning(f"[{activity_id}] PDF Errors: {error_summary}")
                 pdf_sections.append(
-                    f"**Note:** Processing failed for PDF URLs: {error_summary}"
+                    f"**Note:** Processing failed for PDFs: {error_summary}"
                 )
             if pdf_sections:
                 formatted_pdf_content = "\n".join(pdf_sections)
@@ -388,13 +386,12 @@ Ready to increase your influence? Describe your challenge below. 👇
         # --- End PDF Processing ---
 
         try:
-            # --- Step 1: Initial Analysis (LLM Call 1 - FLASH) ---
-            # (Analysis prompt and logic remain the same)
+            # --- Step 1: Enhanced Analysis (LLM Call 1 - FLASH) ---
             await response_handler.emit_text_block(
-                "STATUS", "Analyzing context and planning..."
+                "STATUS", "Performing initial analysis..."
             )
             logger.info(
-                f"[{activity_id}] Performing LLM Call 1 (Analysis) using FLASH."
+                f"[{activity_id}] Performing LLM Call 1 (Enhanced Analysis) using FLASH."
             )
             exact_technique_names = [
                 t.get("name") for t in self._techniques_db if t.get("name")
@@ -402,32 +399,28 @@ Ready to increase your influence? Describe your challenge below. 👇
             exact_names_list_str = "\n".join(
                 [f'- "{name}"' for name in exact_technique_names]
             )
-            # --- UPDATED PERSONA IN PROMPT ---
             analysis_prompt = f"""
-You are GetYes, the persuasion AI assistant. Analyze the 'User Context' provided. Extract key info, identify techniques/search needs, note missing details. **Ignore file URLs during this analysis.**
+You are GetYes, the persuasion AI assistant. Analyze the 'User Context'. Extract key info, identify potential psychological drivers/vulnerabilities of the target (based ONLY on user input), select initial techniques, identify search needs, and note missing details. **Ignore file URLs during this analysis step.**
 
 **Analysis Steps & Output Format:**
 
-1.  Extract Goal.
-2.  Identify Missing Info (Optional): List major missing sections (Target, etc.).
-3.  Select Techniques (Best Effort): Top 3-5 based on available info.
-4.  Identify Information Needs (Best Effort): 2-4 search topics based on available info.
-5.  Determine Status: `sufficient` if Goal found, `insufficient` otherwise.
-6.  Generate JSON Output (Use EXACT key names):
+1.  **Extract Goal:** Identify the primary objective.
+2.  **Identify Missing Info (Optional):** List major missing sections (Target profile, Relationship, etc.).
+3.  **Infer Psychological Drivers/Vulnerabilities (Best Effort):** Based *only* on the user's description of the Target, list 2-3 potential psychological factors (e.g., "Target seems risk-averse", "Motivated by status", "Vulnerable to FOMO"). If target info missing, state "Cannot infer drivers".
+4.  **Select Initial Techniques (Best Effort):** Based on available info, select top 3-5 promising techniques.
+5.  **Identify Information Needs (Best Effort):** Based on available info/techniques, identify 2-4 specific search topics.
+6.  **Determine Status:** `sufficient` if Goal found, `insufficient` otherwise.
+7.  **Generate JSON Output (Use EXACT key names):**
     *   `status`: "sufficient" or "insufficient"
     *   `extracted_goal`: string
     *   `missing_info_notes`: string (optional)
-    *   `selected_techniques`: list of strings
+    *   `inferred_target_drivers`: list of strings or string "Cannot infer drivers"
+    *   `initial_techniques`: list of strings
     *   `needed_information_topics`: list of strings
 
 **User Context:**
 ```
 {user_context_original}
-```
-
-**(Reference Only) Required Prompt Structure:**
-```
-{self.REQUIRED_PROMPT_STRUCTURE}
 ```
 
 **(Reference Only) Available Technique Names:**
@@ -437,7 +430,6 @@ You are GetYes, the persuasion AI assistant. Analyze the 'User Context' provided
 
 **IMPORTANT:** Respond ONLY with the JSON. Use exact keys. Do not analyze URLs here.
 """
-            # --- END UPDATE ---
             logger.debug(
                 f"[{activity_id}] Analysis Prompt (Flash):\n{analysis_prompt[:500]}..."
             )
@@ -452,60 +444,59 @@ You are GetYes, the persuasion AI assistant. Analyze the 'User Context' provided
             analysis_result = self._model_provider.extract_json_from_response(
                 llm1_response_str
             )
-            # (Parsing logic as before)
+
             if analysis_result is None:
-                error_msg = "Failed parsing analysis from AI."
-                logger.error(
-                    f"[{activity_id}] Failed JSON parse (Flash): {llm1_response_str}"
+                raise ValueError(
+                    f"Failed to parse JSON analysis from Flash: {llm1_response_str}"
                 )
-                await self._handle_error(response_handler, error_msg)
-                return
             status = analysis_result.get("status") or analysis_result.get(
                 "validation_status"
-            )
+            )  # Fallback
             if status is None:
-                logger.error(f"[{activity_id}] Status missing: {analysis_result}")
-                await self._handle_error(
-                    response_handler, "AI analysis missing 'status'."
-                )
-                return
+                raise ValueError(f"'status' key missing in analysis: {analysis_result}")
 
-            selected_technique_names = []
-            needed_information_topics = []
-            missing_info_notes = analysis_result.get("missing_info_notes")
             if status == "insufficient":
-                extracted_goal = analysis_result.get("extracted_goal", "Goal missing")
-                logger.warning(f"[{activity_id}] Status insufficient: {extracted_goal}")
+                goal = analysis_result.get("extracted_goal", "Goal missing")
+                logger.warning(f"[{activity_id}] Status insufficient: {goal}")
                 await self._handle_error(
-                    response_handler,
-                    "Goal unclear. Please state what you want to achieve.",
+                    response_handler, "Goal unclear. Please state your objective."
                 )
                 return
-            elif status == "sufficient":
-                selected_technique_names = analysis_result.get(
-                    "selected_techniques", []
-                )
-                needed_information_topics = analysis_result.get(
-                    "needed_information_topics", []
-                )
-                extracted_goal = analysis_result.get("extracted_goal", "Goal extracted")
-                if not isinstance(selected_technique_names, list):
-                    raise ValueError("Invalid tech list")
-                if not isinstance(needed_information_topics, list):
-                    raise ValueError("Invalid info list")
-                logger.info(
-                    f"[{activity_id}] Analysis OK (Flash). Goal:'{extracted_goal}'. Techs:{selected_technique_names}. Info:{needed_information_topics}. Missing:{missing_info_notes or 'None'}"
-                )
-                await response_handler.emit_json("ANALYSIS_RESULT", analysis_result)
-            else:
-                logger.error(f"[{activity_id}] Invalid status '{status}' (Flash)")
-                await self._handle_error(
-                    response_handler, f"AI returned unknown status: {status}"
-                )
-                return
+            elif status != "sufficient":
+                raise ValueError(f"Unknown status '{status}' from analysis.")
 
-            # --- Steps 2, 3, 4 (Search, Technique Details) ---
-            # (No change needed here)
+            extracted_goal = analysis_result.get("extracted_goal", "Goal not specified")
+            missing_info_notes = analysis_result.get("missing_info_notes")
+            inferred_drivers = analysis_result.get("inferred_target_drivers", [])
+            initial_techniques = analysis_result.get(
+                "initial_techniques", []
+            )  # Get initial list
+            needed_information_topics = analysis_result.get(
+                "needed_information_topics", []
+            )
+            if not isinstance(inferred_drivers, (list, str)):
+                raise ValueError("Invalid drivers format")
+            if not isinstance(initial_techniques, list):
+                raise ValueError("Invalid tech list format")
+            if not isinstance(needed_information_topics, list):
+                raise ValueError("Invalid info list format")
+
+            logger.info(
+                f"[{activity_id}] Analysis OK (Flash). Goal:'{extracted_goal}'. Drivers:{inferred_drivers}. Techs:{initial_techniques}. Info:{needed_information_topics}. Missing:{missing_info_notes or 'None'}"
+            )
+            await response_handler.emit_json("ANALYSIS_RESULT", analysis_result)
+
+            # --- **FIX:** Calculate technique_details_str HERE, before LLM Call 2 ---
+            technique_details_str = self._get_technique_details_string(
+                initial_techniques
+            )
+            logger.info(
+                f"[{activity_id}] Retrieved technique details for planning/execution."
+            )
+            # --- End Fix ---
+
+            # --- Step 2: Web Search ---
+            # (Logic remains the same)
             search_queries = []
             search_results_str = "No web search performed or needed."
             if needed_information_topics and self._search_provider:
@@ -540,22 +531,84 @@ You are GetYes, the persuasion AI assistant. Analyze the 'User Context' provided
                     logger.error(f"[{activity_id}] Search error: {e}", exc_info=True)
                     search_results_str = f"[Search Error: {e}]"
                     await response_handler.emit_json("SOURCES", {"error": str(e)})
-            technique_details_str = self._get_technique_details_string(
-                selected_technique_names
-            )
-            logger.info(f"[{activity_id}] Retrieved tech details.")
 
-            # --- Step 5: Generate Final Persuasive Output (LLM Call 2 - PRO) ---
+            # --- Step 3: Strategic Planning (LLM Call 2 - FLASH) ---
             await response_handler.emit_text_block(
-                "STATUS", "Crafting final response using Pro model..."
+                "STATUS", "Developing persuasion strategy..."
             )
             logger.info(
-                f"[{activity_id}] Performing LLM Call 2 (Final Generation) using PRO."
+                f"[{activity_id}] Performing LLM Call 2 (Strategic Planning) using FLASH."
             )
 
-            # --- UPDATED PERSONA IN FINAL PROMPT ---
+            # Planning prompt uses technique_details_str calculated above
+            planning_prompt = f"""
+You are GetYes, the persuasion AI strategist. Based on the initial analysis, available context, search results, and PDF content summary (if any), create a detailed **Persuasion Plan**.
+
+**Inputs:**
+
+1.  **User Context:**
+    ```
+    {user_context_original}
+    ```
+2.  **Initial Analysis Findings:**
+    *   Extracted Goal: {extracted_goal}
+    *   Inferred Target Drivers/Vulnerabilities: {inferred_drivers if isinstance(inferred_drivers, str) else ', '.join(inferred_drivers)}
+    *   Initial Techniques Considered: {', '.join(initial_techniques)}
+    *   Missing Info Notes: {missing_info_notes or "None"}
+3.  **Web Search Results:**
+    ```
+    {search_results_str}
+    ```
+4.  **PDF Content Summary:**
+    ```
+    {formatted_pdf_content}
+    ```
+5.  **Available Technique Details (Reference):**
+    ```
+    {technique_details_str}
+    ```
+
+**Task: Generate the Persuasion Plan**
+
+Output a structured plan (markdown) covering:
+*   **Overall Strategy:** Core persuasive approach.
+*   **Key Argument/Narrative:** Main logical/emotional thread.
+*   **Targeted Emotion(s):** Emotion(s) to evoke/mitigate.
+*   **Technique Sequencing & Application:** Ordered list of chosen techniques (confirm/refine from initial list) with specific application notes for this context (e.g., "Use statistic [X]", "Frame inaction as [Y]").
+*   **Subtle Phrasing Tactics:** 2-3 specific phrasing types (e.g., "Rhetorical questions", "Future pacing", "'Because' justifications").
+*   **Addressing Objections/Drivers:** How to tackle inferred drivers/objections.
+*   **Call to Action:** How to conclude.
+
+**Instructions:** Be specific, actionable, aligned with Goal/Ethics. Output ONLY the plan.
+"""
+            logger.debug(
+                f"[{activity_id}] Planning Prompt (Flash):\n{planning_prompt[:500]}..."
+            )
+            persuasion_plan_str = await self._model_provider.query(
+                model_name=self._model_provider.flash_model_name, query=planning_prompt
+            )
+            logger.info(
+                f"[{activity_id}] Generated Plan (Flash). Length: {len(persuasion_plan_str)}"
+            )
+            logger.debug(f"[{activity_id}] Persuasion Plan:\n{persuasion_plan_str}")
+            await response_handler.emit_json(
+                "PERSUASION_PLAN", {"plan": persuasion_plan_str}
+            )
+
+            # --- Step 4: Technique Details (already retrieved) ---
+            # We use the same technique_details_str calculated after step 1
+
+            # --- Step 5: Final Generation (LLM Call 3 - PRO - Execute Plan) ---
+            await response_handler.emit_text_block(
+                "STATUS", "Executing strategy & generating final response..."
+            )
+            logger.info(
+                f"[{activity_id}] Performing LLM Call 3 (Execute Plan) using PRO."
+            )
+
+            # Final generation prompt uses technique_details_str calculated earlier
             final_generation_prompt = f"""
-You are GetYes, a master persuasion AI assistant. Generate highly persuasive text based ONLY on the info below to achieve the user's Goal. Leverage techniques, search results, and PDF content. Cite web sources used.
+You are GetYes, a master persuasion AI assistant. Meticulously **execute the provided Persuasion Plan** to generate the final text. Use all context (User Input, PDFs, Search Results) as guided by the plan.
 
 **I. Foundational Information:**
 
@@ -563,38 +616,43 @@ You are GetYes, a master persuasion AI assistant. Generate highly persuasive tex
     ```
     {user_context_original}
     ```
-*   **Selected Persuasion Techniques (Apply Principles):**
-    ```
-    {technique_details_str}
-    ```
 *   **Note on Missing User Input (If any):** {missing_info_notes if missing_info_notes else "Sufficient initial details provided."}
 
 **II. Supporting Evidence & External Context:**
 
-*   **Web Search Results (Use facts/data ONLY from here):**
+*   **Web Search Results:**
     ```
     {search_results_str}
     ```
-*   **Provided PDF Content (Use relevant info as context):**
+*   **Provided PDF Content Summary:**
     ```
     {formatted_pdf_content}
     ```
 
-**III. MANDATORY Generation Instructions:**
+**III. The Persuasion Plan to Execute:**
+```markdown
+{persuasion_plan_str}
+```
 
-1.  **Objective:** Achieve user's 'Goal'.
-2.  **Persuasive Power:** Detailed, convincing, manipulative (within ethics). Use techniques, context, search, PDF info.
-3.  **Handling Missing Info:** If noted above, make *reasonable assumptions*, stating them implicitly/explicitly (e.g., "Assuming efficiency is key..."). Proceed with best effort.
-4.  **Tone & Style:** Default professional/formal unless user specified otherwise. Adhere strictly to user's tone.
-5.  **Detail & Length:** Detailed, comprehensive. Aim for user's 'Desired Length'.
-6.  **Factual Grounding (CRITICAL):** NO FABRICATION. Base external facts (stats, studies) ONLY on 'Web Search Results'. Use PDF content for context/internal points. If support missing, omit claim or state generally + note lack of data. If PDF processing failed, acknowledge context might be missing.
-7.  **Referencing (MANDATORY):** End with `References:`. List ONLY web search URLs *actually used*. Format `* [Title](URL)`. State `References: None` if no web results used/found. Do NOT list PDF URLs here.
-8.  **Adherence:** Strictly follow 'Ethical Lines NOT to Cross' & other constraints.
-9.  **Output Format:** ONLY persuasive text + `References:` section. No extra commentary.
+**IV. Persuasion Technique Details (Reference for Plan Execution):**
+```
+{technique_details_str}
+```
 
-**Generate the persuasive text now:**
+**V. MANDATORY Generation Instructions:**
+
+1.  **EXECUTE THE PLAN:** Follow the 'Persuasion Plan'. Implement its strategy, narrative, emotion, technique sequence/application, and phrasing tactics precisely.
+2.  **Integrate Info:** Weave in User Context, PDF Content, Search Results *as directed by the plan*.
+3.  **Persuasive Power:** Detailed, convincing, manipulative (within ethics). Use sophisticated language, nuance, subtle plan application.
+4.  **Handling Missing Info:** If plan needs missing info, make *reasonable assumptions*, stating them implicitly/explicitly. Proceed with best effort.
+5.  **Tone & Style:** Adhere to User Context 'Desired Tone' (or default formal) AND plan's tone guidance.
+6.  **Factual Grounding (CRITICAL):** NO FABRICATION. Base external facts ONLY on 'Web Search Results'. Use PDF content as context/internal points per plan. Note lack of data if needed. Acknowledge PDF errors if relevant.
+7.  **Referencing (MANDATORY):** End with `References:`. List ONLY web search URLs *actually used*. Format `* [Title](URL)`. State `References: None` if none used/found. Do NOT list PDF URLs.
+8.  **Adherence:** Strictly follow 'Ethical Lines NOT to Cross' and the Plan.
+9.  **Output Format:** ONLY persuasive text + `References:` section. No commentary.
+
+**Execute the Persuasion Plan and generate the final text now:**
 """
-            # --- END UPDATE ---
             logger.debug(
                 f"[{activity_id}] Final Gen Prompt (Pro) approx length: {len(final_generation_prompt)}"
             )
@@ -612,10 +670,9 @@ You are GetYes, a master persuasion AI assistant. Generate highly persuasive tex
                 model_name=self._model_provider.pro_model_name,
                 query=final_generation_prompt,
             ):
+                # (Stream processing as before)
                 if isinstance(chunk, str) and chunk.startswith("[ERROR:"):
-                    logger.error(
-                        f"[{activity_id}] Error in final stream (Pro): {chunk}"
-                    )
+                    logger.error(f"[{activity_id}] Error final stream (Pro): {chunk}")
                     await final_response_stream.emit_chunk(
                         f"\n--- AI Error ---\n{chunk}\n"
                     )
@@ -666,7 +723,7 @@ You are GetYes, a master persuasion AI assistant. Generate highly persuasive tex
             error_stream = response_handler.create_text_stream("FINAL_RESPONSE")
             display_error = re.sub(
                 r"Request blocked.*",
-                "Request blocked by content safety filters.",
+                "Blocked by content safety filters.",
                 error_message,
                 flags=re.IGNORECASE,
             )
@@ -682,16 +739,15 @@ You are GetYes, a master persuasion AI assistant. Generate highly persuasive tex
 
 # --- Server Setup ---
 if __name__ == "__main__":
-    logger.info("Starting GetYes Persuasion Agent server...")  # Updated name
+    # (Implementation as before)
+    logger.info("Starting GetYes Persuasion Agent server...")
     try:
         if not dotenv_path:
             logger.warning("No .env file found during startup.")
         agent = PersuasionAgent()
         server = DefaultServer(agent)
-        logger.info("Server configured. Running GetYes...")  # Updated name
+        logger.info("Server configured. Running GetYes...")
         server.run()
     except Exception as main_err:
-        logger.critical(
-            f"FATAL ERROR during agent/server setup: {main_err}", exc_info=True
-        )
+        logger.critical(f"FATAL ERROR during setup: {main_err}", exc_info=True)
         print(f"FATAL ERROR: {main_err}")

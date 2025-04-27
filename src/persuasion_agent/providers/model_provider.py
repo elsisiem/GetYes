@@ -9,16 +9,13 @@ import asyncio
 import json
 import re
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
-from google.generativeai.types import (
-    BlockedPromptException,
-    StopCandidateException,
-)  # Corrected exception names
+from google.generativeai.types import BlockedPromptException, StopCandidateException
 
 logger = logging.getLogger(__name__)
 
 # Generation Config Defaults
 DEFAULT_GENERATION_CONFIG = {
-    "temperature": 0.7,
+    "temperature": 0.7,  # Maintain some creativity
     "top_p": 1.0,
     "top_k": 64,
     "response_mime_type": "text/plain",
@@ -42,44 +39,28 @@ class GeminiModelProvider:
             raise ValueError("Gemini API key is required.")
         self.api_key = api_key
         genai.configure(api_key=self.api_key)
-
-        # Define Model Names (Use env vars or fall back to defaults)
         self.flash_model_name = os.getenv(
             "GEMINI_FLASH_MODEL", "gemini-2.5-flash-preview-04-17"
         )
         self.pro_model_name = os.getenv(
             "GEMINI_PRO_MODEL", "gemini-2.5-pro-preview-03-25"
         )
-
-        # --- UPDATED PERSONA ---
         self.base_system_instruction = f"""You are GetYes, a highly sophisticated persuasion AI assistant. Your goal is to help users craft compelling messages to achieve their objectives. You analyze context, suggest techniques, and generate persuasive text, always adhering to the ethical boundaries defined by the user. Today's date is {datetime.now().strftime("%Y-%m-%d")}. Maintain a helpful and professional tone unless the user requests otherwise."""
-        # --- END UPDATE ---
-
-        # Cache for model instances
         self._models: Dict[str, genai.GenerativeModel] = {}
-
         logger.info(
-            f"GeminiModelProvider initialized. Flash model: '{self.flash_model_name}', Pro model: '{self.pro_model_name}'"
+            f"GeminiModelProvider initialized. Flash: '{self.flash_model_name}', Pro: '{self.pro_model_name}'"
         )
 
     def _get_model(
         self, model_name: str, system_instruction_override: Optional[str] = None
     ) -> genai.GenerativeModel:
         """Gets or creates the GenerativeModel instance for the specified model name."""
-        # --- UPDATED SYSTEM PROMPT REFERENCE ---
-        # Use the agent's name "GetYes" in the system prompt unless overridden
-        default_system_instruction = self.base_system_instruction  # Now uses GetYes
         current_system_instruction = (
-            system_instruction_override or default_system_instruction
+            system_instruction_override or self.base_system_instruction
         )
-        # --- END UPDATE ---
-
         cache_key = f"{model_name}_{hash(current_system_instruction)}"
-
         if cache_key not in self._models:
-            logger.info(
-                f"Creating new GenerativeModel instance for '{model_name}' with specified system instruction."
-            )
+            logger.info(f"Creating new Model instance for '{model_name}'.")
             try:
                 self._models[cache_key] = genai.GenerativeModel(
                     model_name=model_name,
@@ -88,13 +69,8 @@ class GeminiModelProvider:
                 )
             except Exception as e:
                 logger.critical(
-                    f"Failed to create GenerativeModel instance '{model_name}': {e}",
-                    exc_info=True,
+                    f"Failed to create Model '{model_name}': {e}", exc_info=True
                 )
-                if "not found" in str(e).lower() or "is not found" in str(e).lower():
-                    logger.error(
-                        f"Model name '{model_name}' might be incorrect or not available for your API key/region."
-                    )
                 raise
         return self._models[cache_key]
 
@@ -108,7 +84,7 @@ class GeminiModelProvider:
         max_retries: int = 2,
         initial_delay: float = 1.0,
     ) -> Union[AsyncIterator[str], str]:
-        """Internal method to handle content generation with retries for specific errors."""
+        """Internal method to handle content generation with retries."""
         model = self._get_model(model_name, system_prompt_override)
         effective_config_dict = {
             **DEFAULT_GENERATION_CONFIG,
@@ -116,15 +92,14 @@ class GeminiModelProvider:
         }
         effective_config = genai.types.GenerationConfig(**effective_config_dict)
         last_exception = None
+        logger.debug(f"Effective Gen Config: {effective_config_dict}")
 
         for attempt in range(max_retries + 1):
             try:
                 logger.debug(f"Attempt {attempt+1} calling model '{model_name}'...")
                 if stream:
                     response_stream = await model.generate_content_async(
-                        prompt,
-                        generation_config=effective_config,
-                        stream=True,
+                        prompt, generation_config=effective_config, stream=True
                     )
 
                     async def _stream_wrapper(response_stream):
@@ -139,7 +114,7 @@ class GeminiModelProvider:
                                 ):
                                     reason = chunk.prompt_feedback.block_reason.name
                                     logger.warning(f"Stream blocked: {reason}")
-                                    yield f"[ERROR: Blocked by filter ({reason})]"
+                                    yield f"[ERROR: Blocked ({reason})]"
                                     break
                                 elif (
                                     hasattr(chunk, "candidates")
@@ -174,6 +149,7 @@ class GeminiModelProvider:
                         raise BlockedPromptException(f"Prompt blocked: {reason}")
                     if not response.candidates:
                         reason = "Unknown (No Candidates)"
+                        # ...(error inference logic)...
                         if (
                             hasattr(response, "prompt_feedback")
                             and response.prompt_feedback
@@ -181,16 +157,16 @@ class GeminiModelProvider:
                         ):
                             reason = response.prompt_feedback.finish_reason.name
                         logger.warning(
-                            f"No candidates. Reason: {reason}. Resp: {response}"
+                            f"No candidates. Reason:{reason}. Resp:{response}"
                         )
                         if "SAFETY" in reason.upper():
                             raise BlockedPromptException("Blocked (inferred).")
                         else:
-                            return f"[ERROR: No candidates. Reason: {reason}]"
+                            return f"[ERROR: No candidates. Reason:{reason}]"
                     candidate = response.candidates[0]
                     reason = candidate.finish_reason.name
                     if reason != "STOP":
-                        logger.warning(f"Finished reason: {reason}. Resp: {response}")
+                        logger.warning(f"Finish reason:{reason}. Resp:{response}")
                         if reason == "SAFETY":
                             raise BlockedPromptException("Blocked.")
                         elif reason == "RECITATION":
@@ -201,9 +177,9 @@ class GeminiModelProvider:
                             return f"[ERROR: Unexpected finish reason: {reason}]"
                     if not candidate.content or not candidate.content.parts:
                         logger.warning(
-                            f"No content parts. Reason: {reason}. Resp: {response}"
+                            f"No content parts. Reason:{reason}. Resp:{response}"
                         )
-                        return f"[ERROR: No content. Reason: {reason}]"
+                        return f"[ERROR: No content. Reason:{reason}]"
                     return response.text
             except (BlockedPromptException, StopCandidateException) as e:
                 logger.warning(f"Blocked '{model_name}' (att {attempt + 1}): {e}")
@@ -214,6 +190,9 @@ class GeminiModelProvider:
                 if isinstance(e, genai.errors.NotFound):
                     logger.error(f"Model '{model_name}' not found.")
                     raise e
+                # Consider adding specific retry logic for 429 (Rate Limit) or 5xx (Server Error) if needed
+                # if isinstance(e, genai.errors.ResourceExhausted): ... retry ...
+                # elif isinstance(e, genai.errors.InternalServerError): ... retry ...
                 if attempt >= max_retries:
                     logger.error(
                         f"API call failed after {max_retries + 1} attempts for '{model_name}'."
