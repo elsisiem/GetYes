@@ -25,7 +25,12 @@ DEFAULT_GENERATION_CONFIG = {
 }
 
 # Safety Settings - Using ENUMS
-DEFAULT_SAFETY_SETTINGS = {}
+DEFAULT_SAFETY_SETTINGS = {
+    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+    HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+    HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+    HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+}
 
 
 class GeminiModelProvider:
@@ -40,11 +45,9 @@ class GeminiModelProvider:
 
         # Define Model Names (Use env vars or fall back to defaults)
         self.flash_model_name = os.getenv(
-            "GEMINI_FLASH_MODEL", "gemini-2.5-flash-preview-04-17"
+            "GEMINI_FLASH_MODEL", "gemini-1.5-flash-latest"
         )
-        self.pro_model_name = os.getenv(
-            "GEMINI_PRO_MODEL", "gemini-2.5-pro-preview-03-25"
-        )
+        self.pro_model_name = os.getenv("GEMINI_PRO_MODEL", "gemini-1.5-pro-latest")
 
         # --- UPDATED PERSONA ---
         self.base_system_instruction = f"""You are GetYes, a highly sophisticated persuasion AI assistant. Your goal is to help users craft compelling messages to achieve their objectives. You analyze context, suggest techniques, and generate persuasive text, always adhering to the ethical boundaries defined by the user. Today's date is {datetime.now().strftime("%Y-%m-%d")}. Maintain a helpful and professional tone unless the user requests otherwise."""
