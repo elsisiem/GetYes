@@ -2,3 +2,6 @@ python-dotenv
 sentient-agent-framework
 openai
 langchain-core
+tavily-python==0.5.4
+google-generativeai
+google
