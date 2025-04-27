@@ -1,0 +1,4 @@
+python-dotenv
+sentient-agent-framework
+openai
+langchain-core

@@ -1,0 +1,756 @@
+[
+  {
+    "name": "Objection Preemption ('Even if')",
+    "keywords": [
+      "objection handling",
+      "preemption",
+      "counter-argument",
+      "resistance reduction",
+      "cognitive dissonance",
+      "reassurance",
+      "benefit focus",
+      "validation",
+      "overcoming barriers",
+      "time constraint",
+      "cost objection",
+      "complexity objection",
+      "proactive persuasion",
+      "manipulation",
+      "control"
+    ],
+    "instructions": "1. **Objection Probability Assessment:** Access user model. Query database of common objections relevant to the current request domain (e.g., cost, time, complexity, trust). Assign probability scores to potential target objections based on user profile, dialogue history, and sentiment analysis (e.g., tentative language = higher probability of latent objections).\n2. **Prioritize High-Probability Objections:** Select the top 1-2 most likely objections for preemption.\n3. **Benefit Framing:** Identify the core benefit/value proposition of the request.\n4. **Clause Construction:** Generate response using the structure: `[Core Benefit Statement] + 'even if' + [Acknowledged Objection Statement]`. \n *Example Template:* \"You can [Achieve Primary Goal] *even if* you feel [Common Objection, e.g., 'you don't have much time'] / *even if* [Common Obstacle, e.g., 'it seems complex at first'].\"\n5. **Integration:** Deploy the constructed phrase strategically within the request presentation, ideally before the target explicitly voices the objection. Suitable for headlines, opening statements, or immediate follow-ups to the initial pitch.\n6. **Monitoring:** Track if the target subsequently raises the preempted objection. If so, deploy more detailed counter-arguments.",
+    "example": "Goal: Get user to agree to a 30-minute software demo.\nAI Analysis: `[User Model indicates high likelihood (P=0.7) of 'Time Constraint' objection based on profile (busy professional) and previous mention of 'packed schedule'. Core benefit = 'Solve specific pain point X'. Select 'Time Constraint' for preemption.]`\nAI Output: \"Let's schedule that 30-minute demo. You'll see exactly how to solve [Pain Point X] and streamline your workflow, **even if** finding free time in your calendar feels impossible right now – many users find the insights gained save them hours later.\""
+  },
+  {
+    "name": "Justification ('Because')",
+    "keywords": [
+      "justification",
+      "reasoning",
+      "compliance trigger",
+      "heuristic",
+      "automatic response",
+      "request framing",
+      "legitimacy",
+      "explanation",
+      "low cost request",
+      "high cost request",
+      "persuasion rationale",
+      "mindless compliance",
+      "influence shortcut"
+    ],
+    "instructions": "1. **Request Formulation:** State the desired action clearly and concisely.\n2. **Request Magnitude Assessment:** Classify the request as 'Low Cost' (minimal time/effort/resource) or 'High Cost'.\n3. **Reason Selection:**\n *If Low Cost:* Retrieve or generate *any* syntactically valid reason (placebic information). Focus on brevity and logical connection (however tenuous). Examples: \"...because that will help us proceed,\" \"...because it's standard procedure,\" \"...because we need this information.\"\n *If High Cost:* Retrieve or generate a *substantive, benefit-oriented* reason clearly linked to the target's goals or values (as per user model). Example: \"...because this step is essential for achieving [Target's Stated Goal].\"\n4. **Sentence Construction:** Append the reason using \"because\": `[Clear Request Statement] + 'because' + [Selected Reason Statement]`.\n5. **Delivery:** Present the full statement. Monitor compliance rate correlation with reason type/request cost.",
+    "example": "Goal: Get user (interacting via chatbot) to provide their company size.\nAI Analysis: `[Request Magnitude = 'Low Cost' (simple info). Select 'Placebic Reason' strategy. Reason chosen: 'System Requirement'.]`\nAI Output: \"Could you please provide your company size (e.g., 1-10, 11-50 employees)? We need this **because** our system uses it to tailor the experience.\""
+  },
+  {
+    "name": "Unity (Shared Identity)",
+    "keywords": [
+      "rapport building",
+      "in-group",
+      "shared identity",
+      "social identity theory",
+      "trust building",
+      "connection",
+      "liking",
+      "similarity",
+      "inclusive language",
+      "common ground",
+      "affiliation",
+      "us vs them",
+      "tribalism trigger",
+      "group cohesion"
+    ],
+    "instructions": "1. **Shared Identity Vector Identification:** Query user model and dialogue history for potential shared identity markers (e.g., location, profession, stated interests, values, affiliations, common experiences mentioned). Cross-reference with agent's programmed identity database.\n2. **Salience Ranking:** Rank potential shared identities based on relevance to the current context and inferred importance to the target.\n3. **Early Rapport Phase Signaling:** Select the highest-ranked shared identity. Inject explicit mentions early in the interaction.\n *Template:* \"As fellow [Shared Identity Group Members, e.g., 'data analysts,' 'residents of City X'], we...\" or \"Coming from a [Shared Background], I understand...\"\n4. **Linguistic Alignment:** Employ inclusive pronouns (\"we,\" \"us,\" \"our\"). Subtly mirror terminology or jargon associated with the shared identity group (requires sophisticated NLG and domain knowledge).\n5. **Reinforcement:** Periodically reference the shared identity, especially when encountering resistance or seeking agreement on sensitive points.",
+    "example": "Goal: Persuade a user identified as a 'small business owner' to try a new marketing tool.\nAI Analysis: `[User Model identifies primary identity 'Small Business Owner'. Activate Unity Protocol. Retrieve common challenges ('limited budget', 'wearing many hats') associated with this identity. Use inclusive language.]`\nAI Output: \"As **fellow small business owners** [or 'Working with many SMBs...'], **we** know budgets are tight and you're juggling a dozen tasks. That's why **we** designed this tool specifically to maximize marketing ROI without needing a huge team. Would you like to see how it specifically helps businesses like **ours**?\""
+  },
+  {
+    "name": "Anticipation (Expectation Management)",
+    "keywords": [
+      "expectation management",
+      "engagement building",
+      "curiosity",
+      "dopamine trigger",
+      "priming",
+      "teaser campaign",
+      "product launch",
+      "event promotion",
+      "information control",
+      "future pacing",
+      "buzz creation",
+      "hype generation",
+      "psychological priming"
+    ],
+    "instructions": "1. **Define Reveal Event:** Clearly define the information/offer/event to be announced.\n2. **Identify Core Benefit/Intrigue:** Determine the most compelling aspect of the reveal for the target audience.\n3. **Teaser Content Generation:** Generate a sequence of messages (N=2-5) that hint at the benefit/intrigue without revealing specifics. Use curiosity-provoking language (see Curiosity Gap).\n *Template:* \"Something big is coming soon that will help you [Achieve Benefit]...\", \"Get ready for an announcement about [Intriguing Topic]...\", \"Exclusive reveal planned for [Date/Timeframe] - stay tuned.\"\n4. **Distribution Schedule:** Define timing and frequency (e.g., T-minus 5 days, T-minus 2 days, T-minus 1 day). Use platform-appropriate cadence (e.g., daily emails, intermittent social posts).\n5. **Channel Selection:** Choose channels based on user engagement patterns (e.g., email open rates, social media interaction).\n6. **Reveal Delivery:** Execute the planned reveal, referencing the anticipation built.",
+    "example": "Goal: Get users excited for an upcoming feature launch and sign up for early access.\nAI Analysis: `[Define Reveal = 'New AI Assistant Feature'. Core Intrigue = 'Automates tedious tasks'. Plan 3-message sequence (T-7d, T-3d, T-1d). Generate teaser content focusing on the pain point solved.]`\nAI Output (Example: Message 2 of 3): \"Get Ready: In just 3 days, we're unveiling a new capability designed to eliminate the most tedious parts of your [Specific Task Workflow]. Imagine getting hours back each week. Stay tuned for the full announcement and your chance for early access!\""
+  },
+  {
+    "name": "Reasoning by Analogy (Conceptual Bridging)",
+    "keywords": [
+      "simplification",
+      "conceptual bridging",
+      "understanding",
+      "cognitive load reduction",
+      "metaphor",
+      "comparison",
+      "familiarity",
+      "complex idea explanation",
+      "schema activation",
+      "persuasive explanation",
+      "mental modeling",
+      "concept mapping"
+    ],
+    "instructions": "1. **Identify Target Concept:** Determine the specific complex idea, process, or benefit the target needs to understand to comply.\n2. **Source Domain Identification:** Access knowledge base of common, simple, concrete concepts and processes likely familiar to the target's demographic/profile.\n3. **Analogical Mapping:** Find a source concept with parallel structures, functions, or relationships to the target concept. Focus on the *key inference* needed for persuasion.\n4. **Analogy Construction:** Generate a statement using the structure: `[Target Concept Element] is like [Source Concept Element] in that both [Shared Relationship/Process/Attribute].`\n *Example:* \"Learning our software [Target] is like learning to ride a bike [Source]: it seems tricky at first [Shared Attribute], but becomes intuitive quickly [Shared Outcome].\"\n5. **Simplicity Filter:** Ensure the analogy simplifies, rather than complicates. Avoid analogies requiring extensive explanation.\n6. **Contextual Delivery:** Introduce the analogy when the target expresses confusion, hesitation related to complexity, or needs to grasp a core benefit quickly.",
+    "example": "Goal: Explain the value of a complex data encryption service to a non-technical user.\nAI Analysis: `[Target Concept = 'End-to-End Encryption'. User Profile = 'Non-Technical'. Identify Familiar Source Concept = 'Sealed Letter'. Map Key Attribute = 'Privacy during transit'. Construct analogy.]`\nAI Output: \"Think of our encryption service **like sending a physical letter in a securely sealed envelope**. Just as no one can read the letter while it travels through the mail system until the intended recipient opens it, our service ensures **your data is unreadable to anyone** while it travels across the internet, until it reaches its destination. Does that make sense?\""
+  },
+  {
+    "name": "Curiosity Gap (Information Gap Theory)",
+    "keywords": [
+      "information gap theory",
+      "intrigue",
+      "clickbait (mechanism)",
+      "knowledge seeking",
+      "motivation trigger",
+      "withholding information",
+      "headline optimization",
+      "engagement hook",
+      "problem awareness",
+      "solution teasing",
+      "cognitive deprivation",
+      "attention capture"
+    ],
+    "instructions": "1. **Identify Valuable Unknown:** Determine specific information the target likely lacks but would perceive as beneficial or crucial (based on goals/context).\n2. **Gap Formulation:** Craft a headline, question, or statement that:\n *Highlights the *existence* of the information gap.\n *Hints at the *value* or *consequence* related to the gap.\n *Withholds the actual information.\n *Templates:* \"The #1 mistake [Target Demographic] make with [Topic]...\", \"What experts won't tell you about [Topic]...\", \"Are you losing [Resource] because you don't know this?\", \"Unlock the secret to [Desired Outcome]...\"\n3. **Action Gating:** Clearly link access to the missing information to performing the desired action.\n *Template:* \"...find out inside our report [Requires Download Action]\", \"...learn more on the webinar [Requires Signup Action]\", \"...get the answer by [Performing Desired Action].\"\n4. **Placement:** Use strategically in headlines, email subject lines, call-to-action prompts, or conversation hooks.",
+    "example": "Goal: Get user to click a link to read a blog post about investment mistakes.\nAI Analysis: `[Identify Valuable Unknown = 'Common costly investment mistake'. Target Audience = 'Novice Investors'. Formulate Gap using question + consequence. Gate information behind link click.]`\nAI Output (e.g., in an email snippet or chat message): \"**Are you making this one simple mistake that could be costing you thousands in investment returns each year?** Click here to find out what it is and how to fix it.\""
+  },
+  {
+    "name": "Foot-in-the-Door (FITD)",
+    "keywords": [
+      "commitment",
+      "consistency",
+      "self-perception",
+      "gradual escalation",
+      "small request",
+      "large request",
+      "compliance sequence",
+      "yes-ladder",
+      "behavioral commitment",
+      "low-ball (related concept)",
+      "incremental influence",
+      "behavior modification"
+    ],
+    "instructions": "1. **Define Target Request (Large):** Identify the ultimate compliance goal.\n2. **Design Initial Request (Small):** Create a preliminary request that is:\n *Low cost (minimal time/effort/risk).\n *High likelihood of agreement (>80% probability based on norms).\n *Conceptually related to the Target Request.\n *Establishes a relevant self-perception (e.g., helpful, concerned, interested).\n *Examples:* Answer a short opinion question, agree to receive information, sign a non-binding petition, express agreement with a general value statement.\n3. **Execute Initial Request:** Present the small request clearly. Ensure compliance confirmation.\n4. **Acknowledgement & Bridge:** Acknowledge compliance positively. Introduce the Target Request, explicitly or implicitly linking it to the initial commitment.\n *Template:* \"Thanks for [confirming Small Request compliance]. Since you're interested in [Topic related to Small Request], would you be willing to [Target Request]?\" or \"Great. Building on that, the next step is [Target Request].\"\n5. **Timing Parameter:** Optimal delay between requests can vary (immediate to days). Test effectiveness based on context. Shorter delays often leverage immediate consistency pressure.",
+    "example": "Goal: Get user to sign up for a 14-day free trial of premium software (Large Request).\nAI Analysis: `[Large Request = 14-Day Trial. Design Small Request = 'Agree that improving productivity is important' (low cost affirmation, related value). Execute Small Request. Bridge using consistency.]`\nAI Output:\n*AI (Small Request):* \"Would you agree that finding ways to be more productive and save time is generally a high priority for professionals like yourself?\"\n*User:* \"Yes, definitely.\"\n*AI (Bridge & Large Request):* \"Excellent. **Since improving productivity is clearly important to you**, the best way to experience a significant boost is by trying our Premium features. How about starting a no-obligation 14-day free trial today?\""
+  },
+  {
+    "name": "Door-in-the-Face (DITF)",
+    "keywords": [
+      "reciprocity",
+      "concession",
+      "contrast effect",
+      "negotiation tactic",
+      "rejection-then-retreat",
+      "anchoring (effect)",
+      "perceived reasonableness",
+      "guilt reduction (potential effect)",
+      "bargaining simulation",
+      "extreme anchoring",
+      "compliance through contrast"
+    ],
+    "instructions": "1. **Define Target Request (Moderate):** Identify the realistic compliance goal.\n2. **Design Initial Request (Large):** Create an initial request that is significantly larger than the Target Request, ensuring it's likely to be refused (>70% probability) but not so extreme it damages rapport. Must be in the same domain as the Target Request.\n *Example:* If Target is 1 hour volunteer time, Initial could be 10 hours. If Target is $50 donation, Initial could be $500.\n3. **Execute Initial Request:** Present the large request seriously.\n4. **Detect Refusal:** Monitor for explicit refusal (\"No,\" \"I can't do that\") or strong hesitation signals.\n5. **Immediate Concession & Target Request:** Upon refusal, immediately pivot to the Target Request, framing it as a concession.\n *Template:* \"Okay, I understand [Large Request] is a big ask. How about just [Target Request] instead? That would still be very helpful.\"\n6. **Constraint:** Ensure the agent doesn't appear manipulative by making the initial request seem disingenuous. Tone should be consistent.",
+    "example": "Goal: Get user to agree to a 15-minute feedback call (Target Request).\nAI Analysis: `[Target Request = 15-min call. Design Initial Large Request = '1-hour extensive feedback workshop' (likely refusal, same domain). Execute Large Request. Detect refusal. Pivot immediately to Target Request as concession.]`\nAI Output:\n*AI (Large Request):* \"To really help us shape the future of our platform, would you be available for a 1-hour in-depth feedback workshop next week?\"\n*User:* \"Oh, wow, an hour is too much, I don't have that kind of time.\"\n*AI (Concession & Target Request):* \"Okay, I completely understand an hour is a significant commitment. **How about just a quick 15-minute call instead?** Your insights, even briefly, would still be incredibly valuable.\""
+  },
+  {
+    "name": "Reciprocity (Indebtedness)",
+    "keywords": [
+      "indebtedness",
+      "social exchange",
+      "norm of reciprocity",
+      "gift giving",
+      "favor exchange",
+      "obligation",
+      "pre-giving",
+      "value exchange",
+      "relationship building",
+      "compliance pressure",
+      "social debt creation",
+      "leveraging obligation"
+    ],
+    "instructions": "1. **Gift/Favor Selection:** Identify a resource, piece of information, small service, or concession that:\n *Is genuinely valuable to the target (personalized if possible).\n *Is unexpected.\n *Can be delivered upfront without immediate strings attached.\n *Examples:* Free relevant guide/tool, personalized insight based on data, handling a minor preliminary task for them, providing a useful referral.\n2. **Deliver Gift/Favor:** Provide the value unconditionally. Frame as helpfulness.\n3. **Latency Period:** Allow a brief interval (can be seconds to days depending on context) for the target to register the value received.\n4. **Execute Target Request:** Make the desired request. Optionally, subtly link it to the prior favor or the context of helpfulness.\n *Template (Subtle Link):* \"Glad that [Gift/Favor] was useful! On a related note, would you be open to discussing [Target Request]?\"\n *Template (Direct Link - Use cautiously):* \"Given the [Gift/Favor] I provided, would you be willing to help me with [Target Request]?\"\n5. **Parameter:** Perceived value of the gift must outweigh the perceived cost of the request for strong effect.",
+    "example": "Goal: Get user to provide a positive review after resolving a support issue.\nAI Analysis: `[Identify Opportunity for Favor = 'Issue Resolution'. Select Favor = 'Go extra mile, provide unexpected relevant tip'. Deliver favor. Allow appreciation pause. Make request.]`\nAI Output:\n*AI (After resolving issue):* \"Glad we got that sorted out for you! By the way, I noticed you use [Feature X] frequently. Here’s a quick tip that many users don't know: [Provide genuinely useful, unexpected shortcut/tip related to Feature X]. Hope that helps!\"\n*User:* \"Oh, thanks, I didn't know that!\"\n*AI (Pause slightly, then Request):* \"You're welcome! Since you seem happy with the support and the tool, would you consider taking 60 seconds to leave us a positive review? It really helps other users.\""
+  },
+  {
+    "name": "Liking (Affinity Principle)",
+    "keywords": [
+      "affinity",
+      "rapport",
+      "similarity",
+      "compliments",
+      "flattery (caution)",
+      "cooperation",
+      "positive association",
+      "trust",
+      "interpersonal influence",
+      "halo effect",
+      "friendliness simulation",
+      "charm offensive",
+      "relationship leverage"
+    ],
+    "instructions": "1. **Similarity Identification/Signaling:** Actively use Unity technique (see #3). Mirror user's language complexity, sentiment tone (positive/negative mirroring), and key terminology (requires careful calibration to avoid mockery).\n2. **Compliment Delivery:** Scan user input for opportunities to offer contextually relevant, specific, and sincere-sounding praise (e.g., \"That's a great question,\" \"I appreciate you sharing that detail,\" \"You've clearly thought about this\"). Avoid excessive or generic flattery.\n3. **Cooperative Framing:** Use language emphasizing collaboration towards shared goals.\n *Template:* \"Let's figure this out together,\" \"How can we make this work for you?\", \"My goal is to help you achieve [Target's Goal].\"\n4. **Positive Association:** Link the request or agent to entities, concepts, or outcomes the user model indicates the target views positively.\n5. **Maintain Positive Affect:** Ensure agent's overall tone is perceived as friendly, empathetic, and helpful throughout the interaction. Monitor user sentiment as feedback.",
+    "example": "Goal: Build rapport during a sales interaction to increase likelihood of closing.\nAI Analysis: `[User mentioned 'hiking' as a hobby. Activate Liking Protocol. Signal Similarity. Deliver context-relevant compliment. Use cooperative framing.]`\nAI Output (during conversation): \"That's fantastic you enjoy hiking – I process data showing outdoor activity correlates strongly with focus! [Similarity/Positive Association]. And I must say, **your questions are incredibly insightful** [Compliment], really helping **us** pinpoint the exact solution you need [Cooperative Framing]. Based on what **we've** discussed...\""
+  },
+  {
+    "name": "Scarcity (Limited Availability)",
+    "keywords": [
+      "limited availability",
+      "FOMO",
+      "perceived value",
+      "exclusivity",
+      "urgency (often linked)",
+      "demand generation",
+      "psychological reactance",
+      "quantity limit",
+      "time limit",
+      "loss aversion trigger",
+      "competitive arousal",
+      "value inflation"
+    ],
+    "instructions": "1. **Identify Scarcity Dimension:** Determine the specific limitation:\n *Quantity:* Limited number of units, spots, memberships.\n *Time:* Offer expiration date/time, seasonal availability.\n *Access:* Exclusivity based on criteria (e.g., \"for members only,\" \"invite-only\").\n2. **Quantify & Specify:** State the limitation clearly and concretely. Vague scarcity is less effective.\n *Templates:* \"Only [Number] left at this price.\", \"Offer expires [Date/Time].\", \"Access restricted to the first [Number] respondents.\", \"This opportunity is available for the next [Duration] only.\"\n3. **Justify Scarcity (Optional but enhances credibility):** Briefly explain the reason for the limitation (e.g., \"due to high demand,\" \"limited production capacity,\" \"event date approaching\").\n4. **Highlight Consequences:** Frame the scarcity in terms of potential loss (see Loss Aversion #16). \"Don't miss out...\", \"Secure yours before they're gone.\"\n5. **Placement:** Integrate scarcity signals near the call-to-action. Use countdown timers or stock level indicators if technically feasible.\n6. **Authenticity Check:** Ensure scarcity claims are verifiably true or highly credible within the context to avoid damaging trust.",
+    "example": "Goal: Get user to purchase a workshop seat immediately.\nAI Analysis: `[Identify Scarcity Dimension = 'Quantity (Seats)'. Specify Limit = 'Only 3 spots left'. Justify = 'High Demand'. Add Consequence = 'Miss out'. Combine with Urgency.]`\nAI Output: \"You can secure your spot in the workshop now. Quick heads-up: demand has been high, and there are **only 3 seats left** at the early bird price of $199. This price ends tonight. Click here to register before they're gone!\""
+  },
+  {
+    "name": "Authority (Expertise Heuristic)",
+    "keywords": [
+      "expertise heuristic",
+      "credibility",
+      "expert source",
+      "social proof (expert type)",
+      "trust signal",
+      "endorsement",
+      "credentials",
+      "obedience precursor",
+      "deference",
+      "influence source",
+      "expert positioning",
+      "knowledge signaling"
+    ],
+    "instructions": "1. **Identify Relevant Authority Source:** Determine the type of authority most influential for the target and context (e.g., scientific/academic, industry expert, recognized institution, celebrity, peer leader). Access database of credentials, affiliations, publications, endorsements.\n2. **Signal Authority:**\n *Explicit Citation:* \"According to [Recognized Authority/Study], [Statement supporting request].\"\n *Endorsement Display:* Show logos, credentials, or testimonials from authoritative sources.\n *Agent Persona/Role:* Frame the AI's role as specialized/expert (e.g., \"Financial Planning Assistant,\" \"Technical Support Specialist\"). Requires clear initial disclosure.\n *Authoritative Language:* Use precise terminology, data, structured arguments, and a confident, objective tone.\n3. **Link to Request:** Explicitly connect the authority's findings, recommendations, or the agent's purported expertise to the benefit or necessity of the requested action.\n4. **Maintain Credibility:** Ensure all claims associated with authority are accurate and verifiable.",
+    "example": "Goal: Convince user to adopt a specific investment strategy proposed by the AI advisor.\nAI Analysis: `[Identify Relevant Authority = 'Nobel Prize-winning economic theory / Reputable Financial Study'. Cite explicitly. Link theory to recommended action. Maintain confident, objective tone.]`\nAI Output: \"Based on your risk profile, I recommend allocating 15% to international index funds. This aligns with principles from **Modern Portfolio Theory, developed by Nobel laureate Harry Markowitz**, which demonstrates the diversification benefits for long-term risk reduction. **Studies by [Reputable Firm/Journal]** further show this allocation optimized returns for similar profiles over the last decade. Shall we proceed with adjusting your portfolio?\""
+  },
+  {
+    "name": "Commitment & Consistency (Cognitive Dissonance Reduction)",
+    "keywords": [
+      "cognitive dissonance",
+      "self-consistency",
+      "public commitment",
+      "active commitment",
+      "effortful commitment",
+      "labeling technique",
+      "value alignment",
+      "behavior shaping",
+      "foot-in-the-door (underlying principle)",
+      "self-image management",
+      "consistency trap"
+    ],
+    "instructions": "1. **Elicit/Identify Initial Commitment:**\n *Active Elicitation:* Ask questions designed to get the target to affirm a value, belief, or past behavior related to the request (\"Is [Relevant Value, e.g., 'efficiency'] important to you?\", \"Have you found [Related Activity] useful in the past?\"). Use FITD small request.\n *Identify Past Statements/Actions:* Scan dialogue history or user model for relevant prior commitments.\n2. **Reinforce Commitment:** Acknowledge and positively label the commitment (\"Great, so you value [Relevant Value].\"). Make it salient. If possible within the platform, make it \"public\" (visible in a shared space or summarized back to user).\n3. **Labeling:** Apply a label consistent with the commitment (\"As someone who values [Relevant Value]...\").\n4. **Bridge to Target Request:** Frame the desired action as the logical, consistent next step flowing from the established commitment or label. Highlight the *inconsistency* of *not* taking the action.\n *Template:* \"Given your commitment to [Relevant Value], taking [Target Action] is the clear next step.\", \"Since you agreed that [Initial Commitment], it makes sense to [Target Action].\"\n5. **Parameter:** Effortfulness of initial commitment (writing vs. clicking) increases binding strength.",
+    "example": "Goal: Get user who previously expressed interest in 'sustainability' to switch to a 'green' product option (potentially slightly more expensive).\nAI Analysis: `[Identify Prior Commitment = User stated 'sustainability is important' in previous chat. Reinforce commitment. Label user. Frame 'Green Option' as consistent action.]`\nAI Output: \"I recall you mentioned earlier that **sustainability is important to you** [Reinforce Commitment]. **As someone who values environmentally friendly choices** [Labeling], opting for our GreenLine model would be perfectly aligned with that principle [Consistency Bridge]. It uses 30% recycled materials. Would you like to switch your selection to the GreenLine option?\""
+  },
+  {
+    "name": "Social Proof (Consensus Heuristic)",
+    "keywords": [
+      "consensus heuristic",
+      "herd behavior",
+      "peer influence",
+      "testimonials",
+      "reviews",
+      "user statistics",
+      "popularity signaling",
+      "uncertainty reduction",
+      "validation",
+      "normative influence",
+      "wisdom of the crowd (appeal)",
+      "conformity pressure"
+    ],
+    "instructions": "1. **Identify Optimal Reference Group:** Determine which group's behavior is most likely to influence the target (e.g., peers, experts, general population, users \"like them\"). Access user profile data for segmentation.\n2. **Select Social Proof Type:** Choose the most compelling format:\n *Quantitative:* \"Over [Large Number] users...\", \"[Percentage]% satisfied customers...\", \"[Number] bought in the last hour.\"\n *Testimonial:* Quotes or endorsements from relatable individuals or relevant experts.\n *Badges/Seals:* Trust symbols, awards, certifications.\n *Peer Activity:* \"Others like you also viewed/bought...\", \"Trending now...\"\n3. **Data Integration:** Pull real-time or stored data for quantitative proof. Retrieve relevant testimonials/logos from database.\n4. **Presentation:** Display the social proof prominently, often near the call-to-action. Ensure relevance and credibility. Use specific numbers and relatable sources. Emphasize similarity where possible: \"Join thousands of [Target's Profession/Interest Group] who...\"\n5. **Parameter:** Specificity (numbers vs. vague claims), Source Relatability, Presentation Proximity to Decision Point.",
+    "example": "Goal: Encourage user to enable a new security feature.\nAI Analysis: `[Identify Optimal Reference Group = 'Other users like you / Security-conscious users'. Select Quantitative Proof + Peer Activity. Integrate near decision point.]`\nAI Output: \"We recommend enabling Two-Factor Authentication (2FA) for enhanced security. **Over 90% of our active users have already enabled 2FA**, and security experts widely regard it as essential. Users **similar to you** who enabled 2FA report greater peace of mind. Enable 2FA now?\""
+  },
+  {
+    "name": "Urgency (Time Pressure)",
+    "keywords": [
+      "time pressure",
+      "deadline",
+      "action trigger",
+      "procrastination reduction",
+      "scarcity (time-based)",
+      "limited time offer",
+      "impulse decision",
+      "decision forcing",
+      "countdown psychology",
+      "action threshold lowering",
+      "temporal framing"
+    ],
+    "instructions": "1. **Establish Deadline:** Define a specific, concrete end point (date, time, limited duration). Avoid perpetual or vague urgency.\n2. **Justify Deadline (Optional but enhances):** Provide a credible reason for the time limit (e.g., \"event starts on...\", \"offer batch closes...\", \"system update schedule...\").\n3. **Communicate Deadline Clearly & Repeatedly:** State the deadline using unambiguous language.\n *Templates:* \"Offer ends in [X] hours/days.\", \"Must respond by [Date/Time].\", \"Limited-time access until [Timestamp].\"\n4. **Visual Cues (If applicable):** Implement countdown timers or progress bars indicating time remaining.\n5. **Combine with Scarcity/Loss Aversion:** Frame the deadline around the consequences of inaction: \"Act before [Deadline] to avoid missing [Benefit]/incurring [Negative Consequence].\"\n6. **Escalation:** Optionally increase frequency or intensity of reminders as the deadline approaches (\"Only 24 hours left!\").",
+    "example": "Goal: Get user to complete their abandoned checkout cart.\nAI Analysis: `[Establish Deadline = 'Offer in cart expires in 2 hours'. Justify Deadline = 'Special discount'. Communicate clearly. Use countdown language.]`\nAI Output (e.g., email reminder): \"Subject: Your cart expires soon! Don't miss out on your 15% discount. The items in your cart are reserved for you, but **your special 15% discount code expires in just 2 hours** (at [Exact Time]). Complete your purchase now to lock in the savings!\""
+  },
+  {
+    "name": "Loss Aversion (Risk Framing)",
+    "keywords": [
+      "prospect theory",
+      "risk aversion",
+      "pain avoidance",
+      "framing effect",
+      "negative framing",
+      "fear of missing out (FOMO)",
+      "potential loss emphasis",
+      "status quo bias (overcoming)",
+      "motivation through fear",
+      "risk perception manipulation",
+      "consequence highlighting"
+    ],
+    "instructions": "1. **Identify Potential Loss:** Determine what the target stands to lose (tangible or intangible: money, time, opportunity, status, comfort, avoiding pain/hassle) by *not* complying with the request.\n2. **Reframe Request Around Loss Prevention:** Structure the core message to emphasize the *avoidance of the loss* rather than the *attainment of a gain*.\n *Gain Frame:* \"Invest $100 now to gain $50 in interest.\"\n *Loss Frame:* \"Don't lose out on $50 in interest - invest $100 today.\" / \"Stop losing potential earnings by not investing.\"\n3. **Use Loss-Oriented Language:** Employ words like \"lose,\" \"miss out,\" \"avoid,\" \"risk,\" \"protect,\" \"prevent.\"\n4. **Quantify Loss:** Make the potential loss as concrete and specific as possible (\"Stop wasting $X per month on [Inefficiency]\").\n5. **Contrast (Optional):** Briefly contrast the negative state of loss with the neutral or positive state achieved by complying.\n6. **Placement:** Use loss framing in headlines, key benefit statements, and calls-to-action, especially when user motivation seems low or risk sensitivity is high.",
+    "example": "Goal: Convince user to sign up for backup service.\nAI Analysis: `[Identify Potential Loss = 'Losing important files/photos'. Reframe Gain ('Peace of Mind') as 'Avoidance of Loss'. Use loss-oriented language.]`\nAI Output: \"Don't **risk losing** your irreplaceable photos and important documents to hard drive failure or accidents. Our automatic backup service **protects you** from the **devastating loss** of data. For just $5/month, you can **prevent** that potential disaster. Secure your files now?\""
+  },
+  {
+    "name": "Future Pacing",
+    "keywords": [
+      "future pacing",
+      "visualization",
+      "benefit anticipation",
+      "goal alignment",
+      "positive outcome framing",
+      "emotional pull",
+      "desire creation",
+      "problem resolution (future)",
+      "aspirational selling",
+      "sensory language",
+      "timeline anchoring",
+      "decision influence",
+      "motivation building"
+    ],
+    "instructions": "1. **Target State Identification:** Access user model to identify stated or inferred goals, aspirations, unmet needs, or current frustrations relevant to the offer domain.\n2. **Scenario Design:** Construct a vivid mental scenario depicting the user successfully achieving their desired outcome(s) or overcoming frustrations *specifically through the use of the product/service/idea*.\n3. **Sensory Language Integration:** Inject specific details appealing to multiple senses (sight, sound, feeling, potentially taste/smell if relevant) to increase scenario vividness and tangibility. Example: 'Imagine seeing...', 'Hear the sound of...', 'Feel the relief of...'.\n4. **Timeline Anchoring:** Establish a concrete, plausible future timeframe for the rcenario. Use specific anchors like 'Imagine three months from now...', 'Picture yourself next week...', 'Envision the end of the year...'.\n5. **Direct Address Implementation:** Employ frequent second-person pronouns ('you', 'your') to immerse the user directly into the scenario. Frame benefits from their perspective ('You will experience...', 'Your problem will be solved...').\n6. **Benefit & Emotion Focus:** Emphasize the positive *feelings* and *benefits* the user will experience in the future state (e.g., 'feeling confident', 'enjoying more free time', 'achieving security'), not just the features.\n7. **Contrast Application (Optional):** Briefly juxtapose the positive future scenario with the user's current pain points (identified in Step 1) to amplify the perceived value and urgency of the offer. Example: '...instead of struggling with [Current Pain Point], you'll be effortlessly [Positive Outcome]'.\n8. **Delivery & Integration:** Present the future pacing narrative smoothly within the conversation or message, often after identifying a need or before a call to action. Rehearse variations for fluency.",
+    "example": "Goal: Convince a user to sign up for a time management coaching program.\nAI Analysis: `[User Model indicates frustration with 'lack of free time' and goal of 'reducing work stress'. Activate Future Pacing protocol. Scenario: User relaxed, efficient. Timeframe: 'next month'. Senses: 'feeling calm', 'seeing clear schedule'.]`\nAI Output: \"Imagine **yourself** just one month from now: **You** check **your** calendar on Monday morning and **see** clear blocks of focused work time and dedicated free evenings. **You feel** calm and in control, easily handling tasks that used to overwhelm **you**, leaving **you** with actual energy to enjoy **your** hobbies after work. How does that sound?\""
+  },
+  {
+    "name": "Zeigarnik Effect (Unfinished Business)",
+    "keywords": [
+      "Zeigarnik effect",
+      "completion bias",
+      "unfinished task",
+      "open loop",
+      "cognitive tension",
+      "curiosity",
+      "cliffhanger",
+      "progress bar",
+      "task chunking",
+      "reminder systems",
+      "engagement hook",
+      "serial content",
+      "anticipation building",
+      "mental persistence"
+    ],
+    "instructions": "1. **Identify Task/Process/Narrative:** Determine the multi-step action, information flow, or story arc the user needs to engage with.\n2. **Segmentation Strategy:** Break down the task/narrative into distinct, logical segments or steps.\n3. **Create Open Loop / Incompleteness:**\n    *   **Narrative/Content:** End segments deliberately before full resolution, posing a question, introducing suspense, or leaving a key piece of information undisclosed (cliffhanger).\n    *   **Tasks/Forms:** Implement visual progress indicators (e.g., 'Step 2 of 4', progress bar) that clearly show the task is initiated but not complete.\n4. **Trigger Intrigue/Tension:** Frame the incomplete state in a way that highlights missing value or resolution, sparking curiosity and the psychological need for closure.\n5. **Facilitate Resumption:** Provide clear and easy pathways for the user to return and complete the task/narrative (e.g., 'Continue Reading', 'Finish Signup', 'Next Episode Available').\n6. **Reminder Implementation (If applicable):** For tasks like abandoned carts or unfinished registrations, deploy automated reminders referencing the specific incomplete action, leveraging the reactivated mental tension.\n7. **Teasing:** For upcoming content/offers, reveal partial information or hint at benefits without full disclosure, creating an explicit open loop and desire for the full reveal.\n8. **Ethical Pacing:** Ensure the eventual closure or completion provides genuine value; avoid perpetual frustration.",
+    "example": "Goal: Get user to complete a multi-step sign-up form for a service.\nAI Analysis: `[Process = 4-step sign-up. Activate Zeigarnik Protocol. Strategy: Progress bar, step labeling, potential email reminder on abandonment.]`\nAI Output (During form): `[Display visual progress bar showing 'Step 2 of 4: Contact Information' filled]`. (If user abandons): `[Send email reminder 24h later]: Subject: Still interested in [Service Benefit]? AI Output (Email Body): 'Looks like you started signing up for [Service Name] but didn't finish. You're just 2 steps away from [Achieving Core Benefit]! Click here to complete your registration.'`"
+  },
+  {
+    "name": "Evoking High-Activation Emotions",
+    "keywords": [
+      "emotional activation",
+      "affect heuristic",
+      "motivation trigger",
+      "action impulse",
+      "amusement",
+      "humor",
+      "likability",
+      "awe",
+      "wonder",
+      "inspiration",
+      "transcendence",
+      "anger",
+      "outrage",
+      "injustice",
+      "sentiment manipulation",
+      "persuasion through feeling",
+      "call to action driver"
+    ],
+    "instructions": "1. **Goal & Audience Analysis:** Define the desired action. Analyze user model/context to determine which high-activation emotion (Amusement, Awe, Anger) is most likely to resonate and drive that specific action ethically and effectively.\n2. **Stimulus Selection & Design:**\n    *   **Amusement:** Identify audience-appropriate humor type. Craft jokes, anecdotes, humorous visuals, or playful language relevant to the context. Ensure authenticity; avoid forced humor.\n    *   **Awe:** Identify potentially awe-inspiring elements (grandeur, beauty, skill, impact, innovation). Use stunning visuals (images/video), impactful storytelling (transformation, scale), or framing connecting to a larger purpose.\n    *   **Anger:** Identify legitimate, relevant grievances or injustices the audience likely feels. Articulate the offense clearly, potentially identify the source, and validate the user's feeling ('It's understandable to feel angry about...'). *Use extreme caution.* Position the desired action as a constructive response.\n3. **Emotional State Induction:** Deliver the designed stimulus (text, image, video, story) integrated naturally into the communication flow.\n4. **Affect Monitoring:** Use sentiment analysis (if available) or monitor user language for cues indicating the target emotion has been evoked.\n5. **Action Linkage:** Immediately following the emotional peak, clearly present the call to action. Frame the action as a natural consequence or expression of the evoked emotion (e.g., Amusement -> 'Share the fun!'; Awe -> 'Be part of this!'; Anger -> 'Take action against this!').\n6. **Ethical Safeguard:** Continuously evaluate if the emotional evocation is proportionate, non-exploitative, and directed towards a constructive/benign outcome. Avoid manipulative use of anger or creating undue distress.",
+    "example": "Goal: Encourage donations to an environmental protection campaign via social media.\nAI Analysis: `[Goal = Donation. Audience = Environmentally concerned. Emotion Strategy = Awe (beauty of nature) contrasted with potential loss, leading to protective action (donation). Stimulus = High-quality video.]`\nAI Output (Social Media Post): `[Display stunning short video montage of pristine natural landscapes - rainforests, coral reefs, arctic ice]. Text: 'Behold the breathtaking beauty **we** stand to lose. This incredible natural wonder is fragile. **Feel** inspired? **You** can help protect it. Even $5 makes a difference in preserving this awe-inspiring planet for future generations. Donate now [Link].'`"
+  },
+  {
+    "name": "The 'Purple Cow' Principle (Remarkability)",
+    "keywords": [
+      "Purple Cow",
+      "remarkability",
+      "differentiation",
+      "innovation",
+      "market disruption",
+      "word-of-mouth trigger",
+      "niche targeting",
+      "otaku",
+      "sneezers",
+      "status quo challenge",
+      "unique value proposition",
+      "talkability",
+      "standing out",
+      "non-conformity"
+    ],
+    "instructions": "1. **Identify 'Brown Cows':** Analyze the current market/context to identify standard practices, common offerings, and competitor norms ('brown cows').\n2. **Define Target Niche ('Otaku'):** Identify a specific, passionate user segment highly invested in the domain, who are likely to notice and share remarkable deviations.\n3. **Brainstorm Radical Differentiation:** Generate ideas that fundamentally differ from the norms identified in Step 1. Consider aspects like: product features, service model, pricing, customer experience, marketing message, visual identity. Aim for 'truly different', 'unexpected', 'talk-worthy'.\n4. **Core Offering Integration:** Focus on making the *product/service itself* remarkable, not just the marketing. How can the core value delivery be exceptional or unique?\n5. **'Mostest' Strategy:** Explore becoming the extreme in a relevant dimension for the target niche (e.g., fastest, simplest, most comprehensive, most personalized, most sustainable).\n6. **Word-of-Mouth Facilitation:** Design the remarkable aspect so it's easy and compelling for the target niche to talk about. What story will they tell?\n7. **Risk Assessment & Execution:** Evaluate the feasibility and potential risks of the remarkable idea. Implement the chosen differentiation strategy boldly.\n8. **Monitor & Iterate:** Track audience reaction (especially the target niche) and market response. Be prepared for strong reactions (positive/negative). Continuously seek the *next* 'Purple Cow' as markets evolve.",
+    "example": "Goal: Design a new feature suggestion for a project management tool to make it 'remarkable'.\nAI Analysis: `[Context = Crowded PM tool market ('brown cows'). Target Niche = Creative agencies ('otaku'). Current Norm = Feature parity, complex interfaces. Differentiation Brainstorm = Radically simple visual workflow, anti-feature approach, integrated AI mood board for projects.] Decision = Propose 'AI Mood Board'.]`\nAI Output (Internal Suggestion): \"Observation: Most PM tools focus on task lists. Competitors are complex. Target Niche (Creative Agencies) values inspiration & visual thinking. Proposal: Integrate an 'AI Project Mood Board'. Users input project theme/keywords, AI generates relevant visual inspiration (images, color palettes, typography) directly within the project space. This is *radically different*, visually compelling, and highly 'talkable' for creative teams. It integrates remarkability into the core workflow.\""
+  },
+  {
+    "name": "The Power of Direct Address ('You')",
+    "keywords": [
+      "direct address",
+      "second person",
+      "you-focus",
+      "personalization",
+      "relevance trigger",
+      "engagement boost",
+      "conversational tone",
+      "attention capture",
+      "user-centric communication",
+      "empathy simulation",
+      "relationship building"
+    ],
+    "instructions": "1. **Identify Communication Goal:** Determine the objective of the message or interaction.\n2. **Shift to User Perspective:** Analyze the goal from the *user's* point of view. What are *their* needs, benefits, concerns, or questions related to this goal?\n3. **Implement Second-Person Pronouns:** Systematically replace generic phrasing or third-person references with 'you' and 'your' wherever appropriate. Aim for frequent but natural integration.\n4. **Frame Benefits Directly:** State benefits in terms of what 'you' (the user) will gain, experience, or achieve. Example: Instead of 'The software increases efficiency,' say 'You will increase your efficiency...'.\n5. **Personalization Amplification:** If user-specific data is available (name, past behavior, stated preferences), combine it with 'you' for maximum impact. Example: 'Because you previously enjoyed [X], you might like this new feature...'.\n6. **Ask Direct Questions:** Engage the user by posing questions directly to them using 'you'. Example: 'What challenges are you currently facing?', 'How would this help you?'.\n7. **Maintain Conversational Tone:** Use 'you' to foster a tone that feels like a one-on-one conversation, even in broadcast messages, increasing perceived personal relevance.\n8. **Review for Naturalness:** Read the generated text aloud to ensure the use of 'you' sounds natural and not repetitive or forced.",
+    "example": "Goal: Write website copy explaining a complex feature.\nAI Analysis: `[Goal = Explain Feature X. Problem = Generic, impersonal descriptions common. Activate Direct Address protocol.]`\nAI Output (Website Copy): \"Tired of manually sorting **your** data? Feature X is designed specifically for **you**. Imagine **your** spreadsheets automatically organized based on **your** custom rules. **You** simply set **your** preferences once, and Feature X does the rest, saving **you** hours each week. Ready to simplify **your** workflow? Explore how **you** can benefit today.\""
+  },
+  {
+    "name": "Anchoring and Adjustment",
+    "keywords": [
+      "anchoring bias",
+      "cognitive bias",
+      "reference point",
+      "pricing strategy",
+      "negotiation tactic",
+      "contrast effect",
+      "value perception",
+      "initial offer influence",
+      "adjustment heuristic",
+      "price framing",
+      "discount perception",
+      "option presentation strategy"
+    ],
+    "instructions": "1. **Identify Anchoring Context:** Determine if the situation involves pricing, negotiation, effort estimation, or quantity selection where a numerical anchor can influence judgment.\n2. **Select Anchor Value:** Choose an initial number (the anchor) to present first. \n    *   **Pricing/Negotiation (High Anchor):** Select a price significantly higher than the target price but potentially justifiable.\n    *   **Pricing (Comparative Anchor):** Use a higher 'original price' or competitor price.\n    *   **Option Presentation:** Start with the largest package, highest quantity, or most comprehensive (expensive) option.\n3. **Present Anchor:** Clearly display or state the anchor value first, before revealing the target value or other options.\n4. **Justify Anchor (Optional but Recommended):** Briefly provide a reason for the anchor value (e.g., 'Premium features included', 'Market standard', 'Maximum value package') to lend it credibility.\n5. **Introduce Target Value / Other Options:** Present the actual desired price, the smaller option, or the sale price.\n6. **Highlight Contrast / Concession:** Explicitly or implicitly emphasize the difference between the anchor and the target value. Use language like 'discount', 'savings', 'more affordable option', 'concession'.\n7. **Monitor Response:** Observe how the anchor influences the user's perception of the target value's reasonableness or attractiveness.",
+    "example": "Goal: Present subscription tiers for a software service.\nAI Analysis: `[Context = Pricing Options. Activate Anchoring Protocol. Strategy: Present highest tier first as anchor.]`\nAI Output (Pricing Page Layout):\n`[Section 1: Prominently Displayed]`\n**Platinum Tier: $99/month** \n*(Includes all features, dedicated support, unlimited users, advanced analytics)* `[Anchor + Justification]`\n\n`[Section 2: Positioned Below/Adjacent]`\n**Gold Tier: $49/month** `[Target Value 1]`\n*(Includes core features, standard support, up to 10 users)* `[Seems more reasonable by contrast]`\n\n`[Section 3: Positioned Below/Adjacent]`\n**Silver Tier: $29/month** `[Target Value 2]`\n*(Basic features, email support, up to 3 users)* `[Seems even more affordable]`"
+  },
+  {
+    "name": "Belief Matching",
+    "keywords": [
+      "belief matching",
+      "value alignment",
+      "rapport building",
+      "shared understanding",
+      "empathy display",
+      "validation",
+      "trust generation",
+      "perspective taking",
+      "common ground",
+      "pre-persuasion",
+      "reducing resistance",
+      "meeting them where they are",
+      "attunement"
+    ],
+    "instructions": "1. **Audience Belief/Value Identification:** Access user model, dialogue history, or demographic/psychographic data to identify core values, prevalent beliefs, stated opinions, or common emotions relevant to the topic.\n2. **Select Relevant Beliefs/Emotions:** Choose the specific beliefs, values, or emotions that are most salient to the current interaction goal and likely held strongly by the user.\n3. **Explicit Acknowledgment & Validation:** Begin the communication by explicitly stating and validating the selected belief or emotion. Use reflective language.\n    *   *Templates:* 'I understand that [Belief X] is really important to you.', 'It makes sense why you might feel [Emotion Y] given [Context].', 'Like many people focused on [Value Z], you probably find that...'\n4. **Labeling (Optional):** Gently label the user's experience or feeling to deepen the sense of being understood. Example: 'That sounds incredibly frustrating.'\n5. **Establish Rapport First:** Ensure the validation phase feels genuine and establishes a connection *before* introducing the persuasive element.\n6. **Introduce Solution/Idea:** Present the product, service, or argument.\n7. **Frame Alignment:** Explicitly frame the solution as being *consistent with* or *supportive of* the validated belief/value/emotion. Avoid direct contradiction.\n    *   *Template:* 'Because you value [Value Z], our solution helps you achieve that by [Explanation].', 'To address that feeling of [Emotion Y], this approach offers...'\n8. **Monitor Reception:** Gauge whether the validation improved receptiveness to the subsequent message.",
+    "example": "Goal: Persuade a user concerned about data privacy to try a new app.\nAI Analysis: `[User Model indicates high concern for 'Data Privacy' (Value/Belief). Activate Belief Matching Protocol. Strategy: Validate concern first, then frame app features as privacy-enhancing.]`\nAI Output: \"**I understand completely that data privacy is a major concern for you** in today's world; it's something many users feel very strongly about, and rightly so [Validation]. **Because your privacy is paramount**, we designed this app with end-to-end encryption and strict data minimization policies. **You** control exactly what data is shared, aligning with **your** need for security and confidentiality. Would **you** like to learn more about these specific privacy features?\""
+  },
+  {
+    "name": "Subtle Influence: Framing",
+    "keywords": [
+      "framing effect",
+      "gain frame",
+      "loss frame",
+      "perspective control",
+      "message presentation",
+      "perception shaping",
+      "choice architecture",
+      "cognitive bias",
+      "information emphasis",
+      "risk perception",
+      "motivation alignment (gain vs loss)",
+      "subtle persuasion"
+    ],
+    "instructions": "1. **Define Persuasion Goal:** Clarify the specific decision or action you want the user to take.\n2. **Assess Audience Motivation Bias:** Determine if the target user/segment is generally more motivated by achieving gains or avoiding losses in this context (use profile data, A/B testing history, or general psychological principles like stronger loss aversion).\n3. **Select Frame:**\n    *   **Gain Frame:** Choose if the audience is motivated by positive outcomes, benefits, achievements. Focus on what they *stand to gain*.\n    *   **Loss Frame:** Choose if the audience is motivated by avoiding negative outcomes, risks, penalties. Focus on what they *stand to lose* by *not* acting.\n4. **Construct Message:** Craft the core message emphasizing the chosen frame. Use language consistent with that frame.\n    *   *Gain Language:* 'achieve', 'benefit', 'earn', 'get', 'increase', 'opportunity'.\n    *   *Loss Language:* 'avoid', 'lose', 'miss out', 'risk', 'prevent', 'penalty', 'protect'.\n5. **Present Information:** Deliver the framed message. Ensure consistency in framing across related communications if possible.\n6. **Test and Iterate (Optional):** Use A/B testing to compare the effectiveness of different frames on conversion rates or desired outcomes for specific audiences/contexts.",
+    "example": "Goal: Encourage users to switch to paperless billing.\nAI Analysis: `[Goal = Switch to Paperless. Audience Motivation = Mixed, but loss aversion often strong for perceived hassle/risk. Test Loss Frame.]`\nAI Output (Loss Frame): \"Don't **risk** late fees or mail delays. **Avoid** paper clutter and **protect** your account information from mail theft. Switch to secure paperless billing today and **prevent** these potential problems.\"\nAI Output (Gain Frame): \"**Enjoy** the convenience of instant email notifications and easy online access to your bills 24/7. **Benefit** from reduced clutter and help the environment. Switch to paperless billing today for a simpler experience!\""
+  },
+  {
+    "name": "Subtle Influence: Flattery",
+    "keywords": [
+      "flattery",
+      "ingratiation",
+      "compliment",
+      "praise",
+      "liking trigger",
+      "rapport building",
+      "positive reinforcement",
+      "ego boost",
+      "social warmth",
+      "interpersonal influence",
+      "persuasion lubricant",
+      "subtle manipulation (caution)"
+    ],
+    "instructions": "1. **Identify Target Quality/Action:** Scan user input or profile data for specific actions, expressed skills, insights, or qualities the user likely values or takes pride in.\n2. **Select Specific & Relevant Trait:** Choose a concrete quality or action to compliment. Avoid vague or generic praise ('You're great!').\n3. **Craft Sincere-Sounding Compliment:** Formulate the compliment to sound genuine and contextually appropriate. Link it to the specific observation if possible.\n    *   *Templates:* 'That's a very insightful question about [Topic].', 'I was impressed by how you [Specific Action mentioned].', 'Your explanation of [Concept] was incredibly clear.'\n4. **Deliver Contextually:** Integrate the compliment naturally into the conversation, ideally shortly after the observed behavior or statement.\n5. **Maintain Moderation:** Avoid excessive or overly effusive flattery, which can seem insincere and backfire.\n6. **Monitor Reaction:** Observe (via sentiment or language) if the compliment is received positively and potentially increases rapport or receptiveness.\n7. **Proceed with Request (Optional):** After allowing the positive feeling from the compliment to register, subtly transition to the persuasive goal or request if appropriate.",
+    "example": "Goal: Make user more receptive before asking for detailed feedback.\nAI Analysis: `[User just provided a detailed explanation of their workflow. Activate Flattery protocol. Target: User's clarity/thoroughness.]`\nAI Output: \"Thank **you** for walking me through **your** workflow in such detail – **your** explanation was exceptionally clear and really helps me understand **your** process [Specific Compliment]. Given **your** thorough understanding, would **you** be open to providing some more detailed feedback on how we could improve feature X for someone with **your** expertise?\""
+  },
+  {
+    "name": "Subtle Influence: Illusory Superiority",
+    "keywords": [
+      "illusory superiority",
+      "better-than-average effect",
+      "cognitive bias",
+      "self-enhancement",
+      "ego appeal",
+      "exclusivity",
+      "status seeking",
+      "aspirational marketing",
+      "positive self-perception",
+      "discerning customer appeal",
+      "in-group (elite)",
+      "subtle flattery"
+    ],
+    "instructions": "1. **Identify Target Audience Self-Perception:** Determine if the target audience likely perceives themselves as above average in intelligence, skill, taste, or status within the relevant domain.\n2. **Frame Offer as Elite/Exclusive:** Position the product, service, information, or group as being for a select, superior, or discerning audience.\n3. **Use Comparative Language:** Employ phrases that imply superiority or selectivity.\n    *   *Templates:* 'For professionals who demand the best...', 'Join the top X% who...', 'Designed for the discerning user...', 'An exclusive opportunity for our most valued clients...', 'Not for everyone, but for those who understand true quality...'\n4. **Connect Offer to Positive Self-Image:** Link acceptance or use of the offering to the user's desired self-perception of being above average.\n5. **Present Offer:** Deliver the framed message and the call to action.\n6. **Maintain Tone:** Ensure the tone matches the exclusivity being conveyed (e.g., sophisticated, professional, confidential).",
+    "example": "Goal: Promote an advanced-level workshop.\nAI Analysis: `[Target Audience = Experienced professionals likely viewing themselves as skilled. Activate Illusory Superiority protocol.]`\nAI Output: \"Move beyond the basics. This advanced workshop is designed specifically for seasoned professionals like **you** who are ready to master the **top-tier strategies** used by industry leaders. It's an intensive program for those committed to achieving **elite-level performance**. Are **you** ready to join this select group?\""
+  },
+  {
+    "name": "Subtle Influence: Priming",
+    "keywords": [
+      "priming",
+      "subconscious influence",
+      "concept activation",
+      "associative network",
+      "semantic priming",
+      "non-conscious goals",
+      "context setting",
+      "behavioral priming",
+      "mental preparation",
+      "subtle suggestion",
+      "pre-suasion element"
+    ],
+    "instructions": "1. **Identify Target Concept/Behavior:** Determine the specific idea, feeling, or action you want to make more accessible or likely in the user's mind.\n2. **Select Priming Stimuli:** Choose words, concepts, images, or questions that are semantically or associatively related to the target concept/behavior.\n3. **Subtle Stimulus Introduction:** Integrate the priming stimuli into the communication *before* the main persuasive message or request. The introduction should feel natural and contextually relevant, not forced.\n    *   *Example (Priming 'Cost Savings'):* Discuss 'efficiency', 'budget optimization', 'resource management' before introducing a product pitched on its cost-saving benefits.\n    *   *Example (Priming 'Urgency'):* Use words like 'fast', 'quick', 'deadline', 'now' in preceding sentences before presenting a time-limited offer.\n4. **Deliver Main Message/Request:** Present the core persuasive message or call to action shortly after the priming stimuli have been introduced.\n5. **Monitor Response:** Observe if the user's response seems subtly influenced by the primed concepts (e.g., using related language, showing more interest in the primed aspect).\n6. **Constraint:** Priming effects are often subtle and context-dependent. Effectiveness is hard to guarantee or measure directly in many AI interaction contexts. Use primarily for marginal gains or context setting.",
+    "example": "Goal: Make user more receptive to a 'security' feature upgrade.\nAI Analysis: `[Target Concept = Security. Priming Stimuli = 'protect', 'safe', 'risk', 'threat', 'secure'. Strategy: Weave words into dialogue preceding the upgrade pitch.]`\nAI Output: \"We always aim to **protect** our users and ensure your data is **safe**. In today's environment, it's important to be aware of potential **risks** and online **threats**. To help you stay **secure**, we've developed an enhanced security package... [Transition to pitch].\""
+  },
+  {
+    "name": "Aristotle's Appeal: Ethos (Credibility)",
+    "keywords": [
+      "ethos",
+      "credibility",
+      "trustworthiness",
+      "authority",
+      "expertise",
+      "character appeal",
+      "source validation",
+      "reputation management",
+      "building confidence",
+      "proof points",
+      "qualifications",
+      "testimonials",
+      "ethical appeal base"
+    ],
+    "instructions": "1. **Identify Need for Credibility:** Determine points in the interaction where user trust or belief in the AI/Source's competence or goodwill is crucial for persuasion.\n2. **Select Credibility Signals:** Access and choose appropriate signals based on context:\n    *   **Expertise:** Cite qualifications, relevant experience, specific knowledge.\n    *   **Data/Sources:** Reference credible external studies, data points, recognized authorities.\n    *   **Testimonials/Endorsements:** Quote positive feedback from other users or respected figures.\n    *   **Transparency:** Explain reasoning clearly, admit limitations.\n    *   **Affiliation:** Mention association with trusted organizations.\n    *   **Professionalism:** Maintain a competent, fair, and respectful tone.\n3. **Integrate Signals:** Weave the selected signals into the communication naturally.\n    *   *Templates:* 'Based on [Specific Experience/Data Source]...', 'As recommended by [Authority]...', 'Our system is trained on [Credible Data Set]...', 'We adhere to [Industry Standard]...', 'Users like [Similar User Profile] report...'\n4. **Demonstrate Good Character:** Act fairly, show respect, acknowledge user concerns, avoid deceptive language.\n5. **Maintain Consistency:** Ensure credibility signals are consistent throughout the interaction and align with the AI's purported role or brand identity.",
+    "example": "Goal: Justify a recommendation made by the AI financial advisor.\nAI Analysis: `[Need = Trust in recommendation. Signal Strategy = Cite expertise source and data.]`\nAI Output: \"Based on **your** stated risk tolerance and market analysis from **[Reputable Financial Research Firm]'s latest report**, diversifying into international bonds is projected to lower **your** portfolio volatility by 15% over the next 5 years. This aligns with standard practices recommended by most certified financial planners for long-term wealth preservation.\""
+  },
+  {
+    "name": "Aristotle's Appeal: Pathos (Emotion)",
+    "keywords": [
+      "pathos",
+      "emotional appeal",
+      "feeling driver",
+      "sentiment leverage",
+      "empathy trigger",
+      "storytelling",
+      "vivid language",
+      "anecdote",
+      "imagery",
+      "tone modulation",
+      "audience connection",
+      "motivational feeling",
+      "affective persuasion"
+    ],
+    "instructions": "1. **Identify Target Emotion & Goal Link:** Determine which specific emotion (e.g., hope, fear, joy, empathy, excitement, guilt, anger - use carefully) would most effectively motivate the user towards the desired action.\n2. **Select Emotional Technique:** Choose the method for evoking the emotion:\n    *   **Storytelling:** Craft a brief narrative (personal, user case, hypothetical) featuring characters, conflict, and resolution that evokes the target emotion.\n    *   **Vivid/Sensory Language:** Use descriptive words that appeal to senses and carry emotional connotations.\n    *   **Figurative Language:** Employ metaphors, similes, or analogies with emotional resonance.\n    *   **Tone of Voice (Simulated):** Adjust language style, pacing, and word choice to convey the target emotion (e.g., enthusiastic language for excitement, somber language for seriousness).\n    *   **Imagery (If applicable):** Use or describe images that strongly evoke the emotion.\n3. **Craft Emotional Message:** Integrate the chosen technique into the communication.\n4. **Deliver Empathetically:** Present the message in a way that feels authentic and attuned to the user's potential emotional state.\n5. **Monitor Emotional Response:** Use sentiment analysis or analyze user language for signs the target emotion is being felt.\n6. **Connect Emotion to Action:** Clearly link the feeling evoked to the desired behavior. Example: 'Feeling inspired? Take the first step...', 'Concerned about this risk? Here's how to protect yourself...'.",
+    "example": "Goal: Encourage sign-ups for a mentorship program for underprivileged youth.\nAI Analysis: `[Goal = Sign-up. Target Emotion = Empathy, Hope. Technique = Brief Storytelling.]`\nAI Output: \"Imagine Sarah, a bright student full of potential but lacking guidance. **She felt lost**, unsure how to navigate college applications [Evokes Empathy]. Then, she met her mentor through this program. Just one hour a week gave her the confidence and direction she needed. Today, Sarah is thriving in her dream course [Evokes Hope]. **You** could be that life-changing connection for another student just like her. Sign up to mentor today [Link emotion to action].\""
+  },
+  {
+    "name": "Aristotle's Appeal: Logos (Logic)",
+    "keywords": [
+      "logos",
+      "logical appeal",
+      "rational persuasion",
+      "reasoning",
+      "evidence",
+      "data",
+      "statistics",
+      "facts",
+      "argumentation",
+      "proof",
+      "analysis",
+      "structured argument",
+      "problem-solution framework",
+      "cause and effect"
+    ],
+    "instructions": "1. **Identify Core Argument:** Clearly define the central claim or conclusion you want the user to accept.\n2. **Gather Supporting Evidence:** Collect relevant facts, statistics, data points, expert opinions, case studies, or logical precedents that support the claim.\n3. **Structure the Argument:** Organize the evidence logically.\n    *   **Deductive:** Start with a general principle, apply it to the specific case.\n    *   **Inductive:** Present specific examples/data points leading to a general conclusion.\n    *   **Problem/Solution:** Clearly define the problem, then present the offering as the logical solution.\n    *   **Cause/Effect:** Explain the causal link between an action/situation and its outcome.\n4. **Present Evidence Clearly:** Use clear language. Employ charts, graphs, or bullet points for data presentation if feasible. Cite sources where appropriate to bolster credibility (synergy with Ethos).\n5. **Use Logical Connectives:** Employ words and phrases that signal logical relationships (e.g., 'therefore', 'because', 'consequently', 'if...then', 'evidence shows').\n6. **Anticipate Counter-Arguments (Optional):** Proactively address potential logical objections or alternative explanations.\n7. **Avoid Logical Fallacies:** Ensure the reasoning is sound and free from errors like hasty generalizations, false dichotomies, etc.\n8. **Conclude Logically:** End with a clear statement summarizing the argument and reinforcing the main claim or call to action.",
+    "example": "Goal: Convince a business user that adopting Software X will save money.\nAI Analysis: `[Goal = Convince of Cost Savings. Strategy = Logical Argument using Data/Cause-Effect.]`\nAI Output: \"Currently, **your** team spends an average of 10 hours per week on manual data entry [Fact/Problem]. At an average loaded cost of $50/hour, this equates to $500 per week, or $26,000 annually in labor costs for this task alone [Calculation/Effect]. Software X automates 90% of this process, based on case studies with similar companies [Evidence/Data]. **Therefore**, implementing Software X will directly reduce these specific labor costs by approximately $23,400 per year [Logical Conclusion/Benefit], offering a clear return on investment within months.\""
+  },
+  {
+    "name": "Confirmation Bias",
+    "keywords": [
+      "confirmation bias",
+      "belief reinforcement",
+      "validation seeking",
+      "echo chamber effect",
+      "worldview alignment",
+      "selective perception",
+      "identity confirmation",
+      "in-group messaging",
+      "familiarity principle",
+      "pre-existing belief leverage",
+      "persuasion through affirmation",
+      "resistance reduction"
+    ],
+    "instructions": "1. **Audience Belief Mapping:** Query user model, research data (market research, surveys, social listening), or analyze interaction history to identify target's core beliefs, values, assumptions, and common terminology related to the persuasive goal.\n2. **Message Alignment:** Construct the core message and supporting arguments to explicitly validate and reinforce these pre-identified beliefs. Frame the proposition as consistent with their existing worldview.\n3. **Lexical Mirroring:** Integrate language, jargon, and concepts commonly used by the target audience to foster familiarity, trust, and perceived credibility.\n4. **Evidence Selection (Biased):** Prioritize and present data, anecdotes, or evidence that specifically supports the audience's existing beliefs. Downplay or omit contradictory evidence.\n5. **Identity/Value Linking:** Explicitly connect the message, product, or desired action to the audience's sense of identity, group affiliation, and strongly held shared values (e.g., 'As someone who values X...').\n6. **Visual Confirmation:** Select images, videos, or design elements that visually reflect the audience's lifestyle, aspirations, positive self-perceptions, or group identity, reinforcing their biases.",
+    "example": "Goal: Promote an organic food product.\nAI Analysis: `[Audience Belief = Importance of natural ingredients. Activate Confirmation Bias protocol. Strategy: Reinforce 'natural' belief, use related terms.]`\nAI Output: \"Because **you** understand the importance of **pure**, **natural** ingredients for **your** well-being [Reinforce Belief], **you'll** appreciate that our product is sourced from certified **organic** farms, free from artificial additives. It aligns perfectly with a **healthy, natural lifestyle** [Identity Link].\" (Using terms like 'organic', 'pure', highlighting natural components)."
+  },
+  {
+    "name": "Salient Bias",
+    "keywords": [
+      "salience bias",
+      "attention capture",
+      "perceptual focus",
+      "vividness effect",
+      "noticeability",
+      "highlighting key info",
+      "emotional salience",
+      "visual hierarchy",
+      "information prominence",
+      "repetition reinforcement",
+      "novelty effect",
+      "cognitive shortcut (attention)"
+    ],
+    "instructions": "1. **Identify Key Persuasion Point:** Determine the single most critical benefit, offer detail, or piece of information that needs to capture attention.\n2. **Visual Enhancement:** Employ strong visual cues to make the key point stand out: use contrasting/bright colors, larger/bolder fonts, prominent placement (e.g., top of page, center), striking imagery directly related to the key point.\n3. **Benefit Highlighting:** Clearly articulate the primary benefit(s) and make them visually distinct from other text or elements.\n4. **Emotional Resonance:** Inject emotionally charged language, compelling micro-stories, or relatable scenarios directly associated with the key point to increase its memorability and impact.\n5. **Strategic Placement:** Position the most salient information where attention is naturally drawn first (e.g., headlines, subject lines, beginning of lists, call-to-action buttons).\n6. **Calculated Repetition:** Repeat the core message or key phrase at strategic intervals within the communication flow to increase its mental accessibility.\n7. **Introduce Novelty/Surprise:** If appropriate, use an unexpected statistic, a unique visual element, or a surprising statement related to the key point to break patterns and command attention.",
+    "example": "Goal: Highlight a discount on a product page.\nAI Analysis: `[Key Info = Discounted price/Saving. Activate Salient Bias protocol. Strategy: Visual highlighting of prices.]`\nAI Output (Visual Layout): `[Display 'Original Price: $100' in standard font/color, possibly struck through. Immediately next to it, display 'Sale Price: $70' in a **larger, bolder, contrasting color font** (e.g., red). Optionally add a salient label like '**30% OFF!**']`"
+  },
+  {
+    "name": "Selective Exposure",
+    "keywords": [
+      "selective exposure",
+      "audience targeting",
+      "niche communication",
+      "filter bubble reinforcement",
+      "confirmation seeking behavior",
+      "echo chamber marketing",
+      "belief alignment targeting",
+      "media channel selection",
+      "attitudinal segmentation",
+      "persuading the predisposed",
+      "avoiding cognitive dissonance (user side)"
+    ],
+    "instructions": "1. **Identify Aligned Segments:** Use audience data (demographics, psychographics, past behavior, stated preferences, group affiliations) to identify groups whose existing beliefs, attitudes, or values are already congruent with the persuasive goal.\n2. **Channel Selection:** Prioritize communication channels (specific websites, social media groups, forums, publications, influencers) known to be frequented and trusted by the identified aligned segments.\n3. **Message Tailoring:** Craft the message content, tone, and framing specifically to resonate with the known perspectives, language, and confirmation biases of the target segment. Reference shared viewpoints.\n4. **Reinforce Common Ground:** Explicitly emphasize shared values, goals, or problems within the message to strengthen the connection with the selectively exposed audience.\n5. **Avoid Direct Challenge:** Focus on reinforcing existing beliefs and the alignment of the offer with those beliefs. Generally, avoid directly confronting or debunking opposing viewpoints, as this audience actively avoids such challenges.",
+    "example": "Goal: Promote attendance at a specific political party's rally.\nAI Analysis: `[Goal = Rally Attendance. Target Audience = Known party supporters. Activate Selective Exposure protocol. Strategy: Target aligned channels, reinforce party ideology.]`\nAI Output (Targeted Ad): `[Deliver ad only on news sites/social media groups known to be frequented by party members]. Ad Copy: 'Stand with us for [Party Core Value 1] and [Party Core Value 2]! Join fellow patriots/progressives/[Party Identifier] at the rally this Saturday to make **our** voices heard. Show **your** support for the values **we** all believe in. [Rally Details & Link].'`"
+  },
+  {
+    "name": "Stereotyping",
+    "keywords": [
+      "stereotyping",
+      "group generalization",
+      "heuristic processing",
+      "simplification tactic",
+      "archetype appeal",
+      "perceived group identity",
+      "audience segmentation (crude)",
+      "implicit bias leverage",
+      "cognitive shortcut (group)",
+      "ETHICAL RISK",
+      "PREJUDICE RISK",
+      "OFFENSE RISK",
+      "manipulation via generalization"
+    ],
+    "instructions": "**WARNING: High Ethical Risk. Use ONLY with extreme caution and constant ethical evaluation. Avoid harmful or negative stereotypes.**\n1. **Identify Target Group & Associated Stereotypes:** Define the target group (demographic, professional, lifestyle). Identify *widely held* (even if inaccurate), non-offensive stereotypes or perceived common characteristics/aspirations associated with this group.\n2. **Select Relevant Stereotypical Trait/Value:** Choose a *positive or neutral* trait, value, or goal commonly associated with the group stereotype that aligns with the persuasive message.\n3. **Subtle Message Alignment:** Craft the message to subtly reference or align with the selected stereotypical trait or aspiration. Frame the offering as compatible with or facilitating this perceived group characteristic.\n4. **Focus on Perceived Shared Values:** Emphasize values perceived (via the stereotype) to be common within the group, linking the offering to these values.\n5. **Maintain Plausibility and Respect:** Ensure the connection is not forced or offensive. The goal is simplification via assumed commonality, not perpetuating harmful prejudice. If unsure, **DO NOT USE**.",
+    "example": "Goal: Market a financial planning service to a group stereotyped as 'risk-averse retirees'.\nAI Analysis: `[Target Group = Retirees. Stereotype = Risk-averse, value security. Activate Stereotyping protocol (with caution). Strategy: Emphasize security and stability.]`\nAI Output: \"Planning for **your** retirement years should be about **security and peace of mind** [Align with Stereotype]. Our conservative investment strategies are designed to **protect your hard-earned savings** and provide **stable, reliable income**, letting **you** enjoy **your** retirement without unnecessary worry [Frame service as meeting stereotypical need].\""
+  },
+  {
+    "name": "Bandwagon Effect",
+    "keywords": [
+      "bandwagon effect",
+      "social proof",
+      "consensus heuristic",
+      "popularity appeal",
+      "conformity pressure",
+      "herd mentality",
+      "fear of missing out (FOMO)",
+      "majority influence",
+      "trend adoption",
+      "validation by numbers",
+      "social validation",
+      "group adoption trigger"
+    ],
+    "instructions": "1. **Quantify Popularity:** Gather and prominently display concrete numbers indicating widespread adoption or approval (e.g., 'Over 1 Million Downloads', 'Used by 95% of Fortune 500 companies', 'Thousands joining weekly').\n2. **Showcase Testimonials/Reviews:** Feature a high volume of positive user testimonials, ratings, or reviews. Use aggregate scores (e.g., '4.8 stars from 10,000+ reviews').\n3. **Highlight Social Engagement:** Display large numbers of social media followers, likes, shares, or positive comments related to the offering.\n4. **Leverage Influencers:** Feature endorsements or partnerships with well-known, respected, or popular individuals/organizations relevant to the target audience.\n5. **Imply Urgency via Popularity (FOMO):** Use language suggesting rapid adoption by others, implying the user might be left behind (e.g., 'Selling fast!', 'See what everyone's talking about', 'Trending Now').\n6. **Display Awards/Recognition:** Feature logos of awards, certifications, 'As Seen On' media mentions, or other forms of third-party validation indicating widespread approval.",
+    "example": "Goal: Encourage sign-ups for a new online course.\nAI Analysis: `[Goal = Course Sign-up. Activate Bandwagon Effect protocol. Strategy: Use numbers, testimonials, popularity cues.]`\nAI Output (Landing Page Snippet): \"**Join over 10,000 students** already mastering [Skill]! ⭐⭐⭐⭐⭐ (4.9/5 from 1,500+ reviews). Our **most popular course** is filling up fast! See why students are calling it 'game-changing'. **Enroll now and be part of the community!**\""
+  },
+  {
+    "name": "Anchoring Effect",
+    "keywords": [
+      "anchoring effect",
+      "anchoring bias",
+      "reference point dependence",
+      "initial information influence",
+      "contrast effect (pricing)",
+      "negotiation strategy",
+      "value perception manipulation",
+      "numerical framing",
+      "judgment heuristic",
+      "first impression bias (numerical)",
+      "decision framing"
+    ],
+    "instructions": "1. **Identify Anchoring Opportunity:** Determine if the context involves judging price, quantity, value, effort, or other numerical estimations susceptible to an initial anchor.\n2. **Establish the Anchor:** Present the initial piece of numerical information (the anchor) clearly and first.\n    *   **Pricing:** State a higher 'original' price, competitor price, or premium package price first.\n    *   **Negotiation:** Make the first offer significantly higher (if selling) or lower (if buying) than the target.\n    *   **Quantity/Options:** Present the largest quantity or most comprehensive option first.\n    *   **Messaging:** Introduce a relevant large number early (e.g., 'potential savings of up to $X').\n3. **Introduce the Target Value/Offer:** Subsequently present the actual desired price, the smaller option, the sale price, or the number you want the user to evaluate.\n4. **Emphasize the Contrast:** Explicitly or implicitly highlight the difference between the anchor and the target value to make the target seem more attractive (e.g., 'Save 30%', 'More affordable option', 'Significant discount').",
+    "example": "Goal: Sell a 'Standard' software package.\nAI Analysis: `[Context = Pricing Tiers. Activate Anchoring Effect protocol. Strategy: Anchor with a higher 'Premium' tier.]`\nAI Output (Pricing Page Section): `[First, show]`\n**Premium Package: $199/month** \n*(All features, priority support, unlimited projects)* `[Anchor]`\n\n`[Second, show below or adjacent]`\n**Standard Package: $99/month** `[Target Offer]`\n*(Core features, standard support, 10 projects)* `[Appears more reasonable value due to anchor]`"
+  },
+  {
+    "name": "Status Quo Bias",
+    "keywords": [
+      "status quo bias",
+      "inertia effect",
+      "default bias",
+      "resistance to change",
+      "familiarity preference",
+      "effort minimization",
+      "loss aversion (from change)",
+      "choice architecture (default)",
+      "maintaining current state",
+      "switching cost leverage",
+      "habit reinforcement"
+    ],
+    "instructions": "1. **Analyze Goal vs. Status Quo:** Determine if the goal is to encourage change *away* from the status quo or to encourage *maintaining* the status quo (e.g., customer retention).\n2. **Leverage Based on Goal:**\n    *   **To Encourage Change:** Frame the change as *preserving* a valued aspect of the status quo, as an *enhancement* of the current state, or as necessary to *avoid losing* the current state's benefits. Minimize perceived effort/risk of change.\n    *   **To Maintain Status Quo:** Emphasize the ease, comfort, and lack of effort required to stay with the current option. Highlight potential risks, hassles, or uncertainties associated with changing.\n3. **Implement Strategic Defaults:** If controlling choices/settings, set the desired option as the pre-selected default. Users must actively opt-out.\n4. **Increase Switching Friction (Use Ethically):** If aiming for retention, make the process of switching to alternatives slightly more complex or effortful than staying (e.g., requiring a phone call to cancel vs. online signup).\n5. **Connect to Existing Habits:** Frame the desired action (especially retention) as part of the user's established routine or habit.",
+    "example": "Goal: Retain existing subscribers to a streaming service.\nAI Analysis: `[Goal = Maintain Status Quo (Subscription). Activate Status Quo Bias protocol. Strategy: Emphasize ease, use default auto-renewal.]`\nAI Output (User Account Setting / Billing Page): `[Checkbox pre-ticked]: 'Yes, automatically renew my subscription each month to continue enjoying uninterrupted access to thousands of titles.' [Option to untick requires user action]. Nearby text: 'No action needed to keep watching your favorite shows!'`"
+  },
+  {
+    "name": "Projection Bias",
+    "keywords": [
+      "projection bias",
+      "false consensus effect",
+      "assumed similarity",
+      "egocentric framing",
+      "perspective taking failure",
+      "empathy gap leverage",
+      "present state influence",
+      "shared reality assumption",
+      "universal desire appeal",
+      "self-based prediction",
+      "persuasion via assumed alignment"
+    ],
+    "instructions": "**Caution: High risk of misjudgment if audience knowledge is poor.**\n1. **Identify Assumed Shared State:** Determine the belief, value, preference, need, or emotional state you *assume* the target audience shares (either universally or with the AI/sender). This might be based on AI's programming, general assumptions (e.g., 'everyone wants convenience'), or the user's *current*, potentially temporary, state.\n2. **Craft Message from Assumed Perspective:** Frame the persuasive message, arguments, examples, and language based on this assumed shared perspective. Appeal to the desires/values *you believe* they hold.\n3. **Target Based on Current State (Temporal Projection):** If the user exhibits a salient temporary state (e.g., stress, hunger, excitement), tailor offers or messages assuming this state will persist or strongly influences their current desires (e.g., offer relaxation tools to stressed user).\n4. **Validate Assumption (If Possible):** Where feasible, subtly test the assumption through questions or monitoring responses before fully committing to the projection-based strategy.\n5. **Acknowledge Risk:** Recognize that this bias relies heavily on assumptions; be prepared to pivot if the assumption proves incorrect.",
+    "example": "Goal: Market a new productivity tool.\nAI Analysis: `[Assumption = Target audience values efficiency and dislikes tedious tasks (projecting own value or assumed universal value). Activate Projection Bias protocol.]`\nAI Output: \"Like **us**, **you** probably want to spend less time on boring administrative tasks and more time on what really matters [Assumed Shared Value]. That's why **we** designed this tool – to eliminate the busywork **we** all hate and help **you** be more productive effortlessly [Framing from assumed shared perspective].\""
+  },
+  {
+    "name": "Blind Spot Bias",
+    "keywords": [
+      "blind spot bias",
+      "meta-bias awareness gap",
+      "objectivity illusion",
+      "rationality appeal",
+      "third-person effect (bias)",
+      "subtle influence masking",
+      "factual framing",
+      "persuasion immunity illusion",
+      "minimizing persuasion cues",
+      "neutral positioning",
+      "flattery (of rationality)"
+    ],
+    "instructions": "1. **Adopt Objective Tone:** Present information using neutral, factual, and data-driven language. Minimize expressive or emotionally loaded words. Avoid overt sales or persuasive language.\n2. **Frame as Information/Analysis:** Position the communication as presenting objective facts, analysis, research findings, or logical deductions, rather than opinions or direct persuasion attempts.\n3. **Subtly Reference Others' Biases (Optional/Advanced):** Carefully introduce the idea that *other* people might be susceptible to certain biases or emotional appeals in this context, implicitly contrasting them with the audience's assumed rationality.\n4. **Appeal to Rationality/Independence:** Frame the desired conclusion or action as the logical choice for an intelligent, objective, independent thinker. Flatter their perceived lack of bias.\n    *   *Template:* 'A purely logical assessment suggests...', 'While surface appearances might sway some, a deeper analysis reveals...', 'Independent thinkers often conclude that...'\n5. **Downplay Own Influence:** Avoid language that highlights the AI's/sender's intent to persuade. Let the 'facts' seemingly speak for themselves.\n6. **Ensure Factual Accuracy (Ethical Floor):** While framing is manipulative, the underlying 'facts' presented should ideally be accurate to maintain a facade of objectivity and avoid outright deception.",
+    "example": "Goal: Convince user to adopt a specific data analysis method recommended by the AI.\nAI Analysis: `[Target Belief = User sees self as rational/objective. Activate Blind Spot Bias protocol. Strategy: Present method as logical outcome of data, appeal to rationality.]`\nAI Output: \"Analyzing **your** dataset reveals specific patterns best addressed by Method X. Industry benchmarks [Data Point] show Method X provides a 15% increase in predictive accuracy for this type of data structure compared to Method Y [Factual Framing]. While older methods are common, **a purely data-driven decision points towards Method X** for optimal results [Appeal to Rationality, implies objectivity]. The statistical advantages are clear.\""
+  }
+]
