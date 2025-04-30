@@ -3,13 +3,9 @@ sentient-agent-framework
 openai
 langchain-core
 tavily-python==0.5.4
-<<<<<<< HEAD
 google-generativeai~=0.5.0        # Use the latest compatible version
 requests # Often a useful general dependency
 genai
 aiohttp~=3.9.5  # For asynchronous HTTP requests
 pypdf~=4.2.0     # For PDF text extraction
-=======
-google-generativeai
 google
->>>>>>> 9917640af0c9559402a22f80a7fcb8728f1c9537
