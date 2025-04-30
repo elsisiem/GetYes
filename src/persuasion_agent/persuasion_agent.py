@@ -320,7 +320,7 @@ Boost Your Message:
 
 Give me the details. I'll analyze, select proven techniques, and help write a message designed to get results.
 
-Ready to increase your influence? Describe your challenge below. 👇
+Ready to increase your influence? Describe your challenge below.
 """
             start_stream = response_handler.create_text_stream("FINAL_RESPONSE")
             await start_stream.emit_chunk(start_message.strip())
